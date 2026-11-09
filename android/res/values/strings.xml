@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">清渠</string>
+    <string name="app_name">小禹</string>
     <string name="app_subtitle">智慧水处理平台 · 移动端</string>
     <string name="login_title">欢迎回来</string>
     <string name="login_sub">登录后查看站点运行、告警与工单</string>

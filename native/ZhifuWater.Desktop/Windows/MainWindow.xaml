@@ -1,7 +1,7 @@
 ﻿<Window x:Class="ZhifuWater.Desktop.Windows.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="清渠 · 村镇水处理站智能运维平台"
+        Title="小禹 · 村镇水处理站智能运维平台"
         Width="1440" Height="900" MinWidth="1180" MinHeight="720"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None" ResizeMode="CanResize"
@@ -26,7 +26,7 @@
                                       Fill="#0B2427" Stretch="Uniform" Margin="7,6,7,7" />
                             </Border>
                             <StackPanel Margin="9,0,0,0" VerticalAlignment="Center">
-                                <TextBlock Text="清渠" Foreground="#F2F7F8" FontSize="15" FontWeight="SemiBold" />
+                                <TextBlock Text="小禹" Foreground="#F2F7F8" FontSize="15" FontWeight="SemiBold" />
                                 <TextBlock Text="村镇水处理站智能运维平台" Foreground="#7E939D" FontSize="9" Margin="0,1,0,0" TextTrimming="CharacterEllipsis" />
                             </StackPanel>
                         </StackPanel>

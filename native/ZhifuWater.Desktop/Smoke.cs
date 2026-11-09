@@ -85,7 +85,7 @@ public static class Smoke
             var webView = typeof(App).Assembly.GetTypes().Where(t => t.FullName != null && t.FullName.Contains("WebView", StringComparison.OrdinalIgnoreCase)).ToList();
             if (webView.Count > 0) throw new InvalidOperationException("检测到 WebView 依赖：" + string.Join(",", webView.Select(t => t.FullName)));
 
-            var lnkTest = Path.Combine(Path.GetTempPath(), "qingqu-shortcut-selftest.lnk");
+            var lnkTest = Path.Combine(Path.GetTempPath(), "xiaoyu-shortcut-selftest.lnk");
             try { if (File.Exists(lnkTest)) File.Delete(lnkTest); } catch { }
             var lnkMade = ShortcutGuard.Create(lnkTest, Environment.ProcessPath ?? string.Empty);
             var lnkOk = lnkMade && File.Exists(lnkTest);

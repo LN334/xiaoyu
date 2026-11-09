@@ -45,7 +45,7 @@ public sealed class KioskWindow : Window
     public KioskWindow(AppServices services)
     {
         _services = services;
-        Title = "现场触摸屏 · 清渠";
+        Title = "现场触摸屏 · 小禹";
         Width = 1920;
         Height = 1080;
         MinWidth = 1280;
@@ -130,7 +130,7 @@ public sealed class KioskWindow : Window
         header.Children.Add(accent);
 
         var title = new StackPanel { Orientation = Orientation.Horizontal, VerticalAlignment = VerticalAlignment.Center, Margin = new Thickness(24, 0, 0, 0) };
-        title.Children.Add(new TextBlock { Text = "清渠", FontSize = 28, FontWeight = FontWeights.SemiBold, Foreground = KioskText, VerticalAlignment = VerticalAlignment.Center });
+        title.Children.Add(new TextBlock { Text = "小禹", FontSize = 28, FontWeight = FontWeights.SemiBold, Foreground = KioskText, VerticalAlignment = VerticalAlignment.Center });
         title.Children.Add(new TextBlock { Text = "现场触摸屏", FontSize = 18, Foreground = Hex("#5FB4EC"), Margin = new Thickness(14, 4, 0, 0), VerticalAlignment = VerticalAlignment.Center });
         _siteText.Text = _services.Data.Site.Name;
         title.Children.Add(_siteText);

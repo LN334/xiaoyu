@@ -383,9 +383,9 @@ function seedOps(now, assets) {
 
   /* ---------------- 系统设置 ---------------- */
   const settings = {
-    platformName: '清渠 · 村镇水处理站智能运维平台',
-    shortName: '清渠',
-    orgName: '清渠（示范项目组）',
+    platformName: '小禹 · 村镇水处理站智能运维平台',
+    shortName: '小禹',
+    orgName: '小禹（示范项目组）',
     version: '2.0.8',
     docVersion: 'V2.2',
     demoMode: true,

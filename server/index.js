@@ -62,7 +62,9 @@ if (!Number.isInteger(args.port) || args.port < 1 || args.port > 65535) {
 const ROOT = path.join(__dirname, '..');
 const DATA_DIR = path.isAbsolute(args.data) ? args.data : path.join(ROOT, args.data);
 const WEB_ROOT = path.join(ROOT, 'web');
-const RELEASE_VERSION = JSON.parse(fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8')).version;
+const RELEASE_VERSION = JSON.parse(
+  fs.readFileSync(path.join(ROOT, 'package.json'), 'utf8').replace(/^\uFEFF/, '')
+).version;
 
 const logger = {
   info: (...a) => { if (!args.quiet) console.log(`[${iso().slice(11, 19)}]`, ...a); },
@@ -256,7 +258,7 @@ server.listen(args.port, args.host, () => {
   const accounts = users.map(u => `${u.username}（${u.name}·${(store.data.roles[u.role] || {}).name || u.role}）`).join('、');
   console.log('');
   console.log('  ╔══════════════════════════════════════════════════════════╗');
-  console.log('  ║   智赋乡水 · 智慧水处理平台   V2.2 演示环境              ║');
+  console.log('  ║   小禹 · 村镇水处理站智能运维平台   V2.2 演示环境        ║');
   console.log('  ╚══════════════════════════════════════════════════════════╝');
   console.log(`   访问地址   ${url}`);
   console.log(`   数据目录   ${DATA_DIR}`);

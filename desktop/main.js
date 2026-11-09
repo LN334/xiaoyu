@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * 智赋乡水 · 智慧水处理平台 —— 桌面端启动器
+ * 小禹 · 村镇水处理站智能运维平台 —— 桌面端启动器
  *
  * 思路：桌面端不重写平台，只做「一键启动」的外壳。
  *  - 用 Electron 自带的 Node 运行时启动平台服务（server/index.js）；
@@ -207,7 +207,7 @@ function buildMenu() {
             dialog.showMessageBox({
               type: 'info',
               title: '关于',
-              message: '智赋乡水 · 智慧水处理平台',
+              message: '小禹 · 村镇水处理站智能运维平台',
               detail:
                 '方案 V2.2 可运行演示版（单站）。\n' +
                 '数据由内置模拟网关生成，不连接现场 PLC。\n' +
@@ -253,7 +253,7 @@ async function createWindow() {
     minHeight: 700,
     show: false,
     backgroundColor: '#071e24',
-    title: '智赋乡水 · 智慧水处理平台',
+    title: '小禹 · 村镇水处理站智能运维平台',
     autoHideMenuBar: true,
     ...(fs.existsSync(iconPath) ? { icon: iconPath } : {}),
     webPreferences: {

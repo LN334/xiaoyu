@@ -65,7 +65,7 @@ public class LoginActivity extends Activity {
         logoBox.addView(drop, dropLp);
         page.addView(logoBox, U.lp(U.dp(this, 64), U.dp(this, 64)));
 
-        TextView appName = U.tv(this, "清渠", 26, U.INK, true);
+        TextView appName = U.tv(this, "小禹", 26, U.INK, true);
         page.addView(appName, U.lpWith(this, U.MATCH, U.WRAP, 0, 18, 0, 0));
         TextView sub = U.tv(this, "智慧水处理平台 · 移动端", 13, U.MUTED, false);
         page.addView(sub, U.lpWith(this, U.MATCH, U.WRAP, 0, 5, 0, 0));
@@ -149,7 +149,7 @@ public class LoginActivity extends Activity {
         serverHint.setLineSpacing(U.dp(this, 2), 1f);
         serverBox.addView(serverHint, U.lpWith(this, U.MATCH, U.WRAP, 0, 10, 0, 0));
 
-        TextView footer = U.tv(this, "清渠 · 原生安卓客户端 v" + U.appVersion(this), 11.5f, U.MUTED2, false);
+        TextView footer = U.tv(this, "小禹 · 原生安卓客户端 v" + U.appVersion(this), 11.5f, U.MUTED2, false);
         footer.setGravity(Gravity.CENTER);
         page.addView(footer, U.lpWith(this, U.MATCH, U.WRAP, 0, 18, 0, 0));
 

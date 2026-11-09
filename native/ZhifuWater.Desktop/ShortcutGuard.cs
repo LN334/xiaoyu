@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 namespace ZhifuWater.Desktop;
 
 /// <summary>
-/// 桌面快捷方式自修复：安装版（自家目录里有安装包放的 Uninstall.exe）每次启动检查桌面上的「清渠.lnk」，
+/// 桌面快捷方式自修复：安装版（自家目录里有安装包放的 Uninstall.exe）每次启动检查桌面上的「小禹.lnk」，
 /// 不见了就照着自己重建一个。开发目录里运行不动任何桌面文件。
 /// </summary>
 internal static class ShortcutGuard
 {
-    private const string LinkName = "清渠.lnk";
+    private const string LinkName = "小禹.lnk";
 
     public static void EnsureOnStartup()
     {
@@ -24,6 +24,9 @@ internal static class ShortcutGuard
             if (!File.Exists(Path.Combine(dir, "Uninstall.exe"))) return;
             var desktop = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             if (string.IsNullOrEmpty(desktop)) return;
+            // 改名前的旧图标指向已卸载的「清渠」，留在桌面上只会点不开
+            var legacy = Path.Combine(desktop, "清渠.lnk");
+            try { if (File.Exists(legacy)) File.Delete(legacy); } catch { }
             var lnk = Path.Combine(desktop, LinkName);
             if (File.Exists(lnk)) return;
             Create(lnk, exe);
@@ -49,7 +52,7 @@ internal static class ShortcutGuard
             link.TargetPath = exe;
             link.WorkingDirectory = Path.GetDirectoryName(exe) ?? string.Empty;
             link.IconLocation = exe + ",0";
-            link.Description = "清渠 · 村镇水处理站智能运维平台";
+            link.Description = "小禹 · 村镇水处理站智能运维平台";
             link.Save();
             return File.Exists(lnkPath);
         }

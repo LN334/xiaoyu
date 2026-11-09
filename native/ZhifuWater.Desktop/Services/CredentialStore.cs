@@ -16,6 +16,11 @@ public static class CredentialStore
 
     private static string FilePath => Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        "Xiaoyu", "login.json");
+
+    /// <summary>改名前的「清渠」版本存过同一份凭据，第一次启动时迁过来。</summary>
+    private static string LegacyFilePath => Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
         "Qingqu", "login.json");
 
     public sealed class Saved
@@ -28,8 +33,11 @@ public static class CredentialStore
     {
         try
         {
-            if (!File.Exists(FilePath)) return null;
-            var json = File.ReadAllText(FilePath, Encoding.UTF8);
+            var path = File.Exists(FilePath)
+                ? FilePath
+                : File.Exists(LegacyFilePath) ? LegacyFilePath : null;
+            if (path is null) return null;
+            var json = File.ReadAllText(path, Encoding.UTF8);
             var saved = JsonSerializer.Deserialize<Saved>(json);
             if (saved is null || string.IsNullOrEmpty(saved.Account) || string.IsNullOrEmpty(saved.Password)) return null;
             var plain = Transform(Convert.FromBase64String(saved.Password), encrypt: false);
@@ -57,6 +65,7 @@ public static class CredentialStore
             }
             var saved = new Saved { Account = account, Password = Convert.ToBase64String(blob) };
             File.WriteAllText(FilePath, JsonSerializer.Serialize(saved), Encoding.UTF8);
+            if (File.Exists(LegacyFilePath)) File.Delete(LegacyFilePath);
         }
         catch
         {
@@ -69,6 +78,7 @@ public static class CredentialStore
         try
         {
             if (File.Exists(FilePath)) File.Delete(FilePath);
+            if (File.Exists(LegacyFilePath)) File.Delete(LegacyFilePath);
         }
         catch
         {

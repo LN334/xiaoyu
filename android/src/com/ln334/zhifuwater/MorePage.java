@@ -336,7 +336,7 @@ public class MorePage extends BasePage {
             }
         });
         body.addView(logout, U.lpWith(ctx, U.MATCH, U.dp(ctx, 48), 0, 14, 0, 0));
-        TextView footer = U.tv(ctx, "清渠 · 原生安卓客户端 v" + U.appVersion(ctx),
+        TextView footer = U.tv(ctx, "小禹 · 原生安卓客户端 v" + U.appVersion(ctx),
                 10.5f, U.MUTED2, false);
         footer.setGravity(Gravity.CENTER);
         body.addView(footer, U.lpWith(ctx, U.MATCH, U.WRAP, 0, 12, 0, 0));

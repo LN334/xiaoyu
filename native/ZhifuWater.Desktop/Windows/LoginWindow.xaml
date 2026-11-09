@@ -1,7 +1,7 @@
 ﻿<Window x:Class="ZhifuWater.Desktop.Windows.LoginWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="清渠"
+        Title="小禹"
         Width="1080" Height="720"
         MinWidth="960" MinHeight="640"
         WindowStartupLocation="CenterScreen"
@@ -58,9 +58,9 @@
                           Fill="#7ED9CB" Stretch="Fill" Margin="17,17,17,15" />
                 </Grid>
 
-                <TextBlock Text="清渠" FontSize="30" FontWeight="SemiBold" Foreground="#F4FBFA"
+                <TextBlock Text="小禹" FontSize="30" FontWeight="SemiBold" Foreground="#F4FBFA"
                            Margin="0,20,0,0" />
-                <TextBlock Text="QINGQU" FontSize="11" Foreground="#7FC0B6" Margin="1,5,0,0" />
+                <TextBlock Text="XIAOYU" FontSize="11" Foreground="#7FC0B6" Margin="1,5,0,0" />
 
                 <Border Width="34" Height="2" Background="#5EBCAE" HorizontalAlignment="Left"
                         Margin="0,26,0,0" />

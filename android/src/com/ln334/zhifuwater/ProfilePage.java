@@ -140,9 +140,9 @@ public class ProfilePage extends BasePage {
             public void onClick(View v) {
                 try {
                     ctx.startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://github.com/LN334/qingqu/releases/latest")));
+                            Uri.parse("https://github.com/LN334/xiaoyu/releases/latest")));
                 } catch (Exception ignored) {
-                    U.toast(ctx, "打不开发布页，请手动访问 github.com/LN334/qingqu/releases");
+                    U.toast(ctx, "打不开发布页，请手动访问 github.com/LN334/xiaoyu/releases");
                 }
             }
         });
@@ -193,7 +193,7 @@ public class ProfilePage extends BasePage {
         });
         body.addView(logout, U.lpWith(ctx, U.MATCH, U.dp(ctx, 48), 0, 8, 0, 0));
 
-        TextView footer = U.tv(ctx, "清渠 · 原生安卓客户端 v" + U.appVersion(ctx), 10.5f, U.MUTED2, false);
+        TextView footer = U.tv(ctx, "小禹 · 原生安卓客户端 v" + U.appVersion(ctx), 10.5f, U.MUTED2, false);
         footer.setGravity(Gravity.CENTER);
         body.addView(footer, U.lpWith(ctx, U.MATCH, U.WRAP, 0, 14, 0, 0));
     }

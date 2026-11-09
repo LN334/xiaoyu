@@ -1,4 +1,4 @@
-﻿# 智赋乡水 · 图标生成脚本（v2）
+# 小禹 · 图标生成脚本（v2）
 # 用 GDI+ 直接绘制（支持透明通道），输出多尺寸 PNG 与 Windows ICO。
 # 用法：
 #   powershell -ExecutionPolicy Bypass -File make_icon.ps1            # 桌面图标（圆角+透明）

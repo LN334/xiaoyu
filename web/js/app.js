@@ -270,9 +270,9 @@ async function navigate() {
 }
 
 function setTitle(title, section) {
-  $('#page-title').textContent = title || '清渠';
+  $('#page-title').textContent = title || '小禹';
   if (section) $('#crumb-section').textContent = section;
-  document.title = `${title} · 清渠`;
+  document.title = `${title} · 小禹`;
 }
 
 function cleanupPage() {

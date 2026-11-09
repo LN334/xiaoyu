@@ -360,7 +360,7 @@ public partial class MainWindow : Window
         try
         {
             TrayIcon.Ensure(this);
-            TrayIcon.ShowBalloon("清渠仍在后台运行", "双击托盘图标可重新打开窗口；要彻底退出请用托盘菜单。");
+            TrayIcon.ShowBalloon("小禹仍在后台运行", "双击托盘图标可重新打开窗口；要彻底退出请用托盘菜单。");
         }
         catch (Exception ex)
         {
@@ -415,8 +415,8 @@ public partial class MainWindow : Window
             BellBadgeText.Text = unread > 99 ? "99+" : unread.ToString();
             FooterRight.Text = "最后更新 " + _services.Data.LastUpdated.ToString("HH:mm:ss");
             TrayIcon.UpdateTooltip(alarms > 0
-                ? $"清渠 · 运行中 · 待处理告警 {alarms} 条"
-                : "清渠 · 运行中 · 无待处理告警");
+                ? $"小禹 · 运行中 · 待处理告警 {alarms} 条"
+                : "小禹 · 运行中 · 无待处理告警");
             CheckNewAlarms();
             WatchAssignments();
         }

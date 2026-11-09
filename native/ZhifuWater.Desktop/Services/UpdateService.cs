@@ -29,7 +29,7 @@ public sealed class UpdateSettings
 /// <summary>基于 GitHub Releases 的更新检查、下载与安装。发布页即更新源，无需自建服务端。</summary>
 public static class UpdateService
 {
-    public const string Repo = "LN334/qingqu";
+    public const string Repo = "LN334/xiaoyu";
     private const string DefaultFeed = "https://api.github.com/repos/" + Repo + "/releases/latest";
     private static readonly HttpClient Http = CreateClient();
 
@@ -43,7 +43,7 @@ public static class UpdateService
     private static HttpClient CreateClient()
     {
         var c = new HttpClient { Timeout = TimeSpan.FromSeconds(20) };
-        c.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Qingqu-Desktop-Updater");
+        c.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Xiaoyu-Desktop-Updater");
         c.DefaultRequestHeaders.TryAddWithoutValidation("Accept", "application/vnd.github+json");
         return c;
     }
@@ -54,7 +54,7 @@ public static class UpdateService
     {
         get
         {
-            var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Qingqu");
+            var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Xiaoyu");
             Directory.CreateDirectory(dir);
             return Path.Combine(dir, "update.json");
         }
@@ -79,7 +79,8 @@ public static class UpdateService
     /// <summary>检查更新。feed 可指向 GitHub API、本地 JSON 清单或 HTTP 清单，便于内网/离线测试。</summary>
     public static async Task<UpdateInfo?> CheckAsync(string? feed = null, CancellationToken ct = default)
     {
-        feed ??= Environment.GetEnvironmentVariable("QINGQU_UPDATE_FEED");
+        feed ??= Environment.GetEnvironmentVariable("XIAOYU_UPDATE_FEED")
+                ?? Environment.GetEnvironmentVariable("QINGQU_UPDATE_FEED");
         if (string.IsNullOrWhiteSpace(feed)) feed = DefaultFeed;
 
         string json;
@@ -115,7 +116,7 @@ public static class UpdateService
             foreach (var a in assets.EnumerateArray())
             {
                 var name = a.TryGetProperty("name", out var n) ? n.GetString() ?? "" : "";
-                if (!name.StartsWith("Qingqu-Setup-", StringComparison.OrdinalIgnoreCase) ||
+                if (!name.StartsWith("Xiaoyu-Setup-", StringComparison.OrdinalIgnoreCase) ||
                     !name.EndsWith(".exe", StringComparison.OrdinalIgnoreCase)) continue;
                 assetName = name;
                 assetUrl = a.TryGetProperty("browser_download_url", out var u) ? u.GetString() : null;
@@ -159,7 +160,7 @@ public static class UpdateService
         get
         {
             var dir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "Qingqu", "Updates");
+                "Xiaoyu", "Updates");
             Directory.CreateDirectory(dir);
             return dir;
         }
@@ -209,13 +210,13 @@ public static class UpdateService
         return Convert.ToHexString(hash).ToLowerInvariant();
     }
 
-    /// <summary>更新过程诊断日志，写到 %LOCALAPPDATA%\Qingqu\update.log，便于排查「点了没反应」。</summary>
+    /// <summary>更新过程诊断日志，写到 %LOCALAPPDATA%\Xiaoyu\update.log，便于排查「点了没反应」。</summary>
     public static void Log(string message)
     {
         try
         {
             var dir = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Qingqu");
+                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Xiaoyu");
             Directory.CreateDirectory(dir);
             File.AppendAllText(Path.Combine(dir, "update.log"),
                 DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + " " + message + Environment.NewLine,
@@ -230,17 +231,17 @@ public static class UpdateService
     /// <summary>以管理员权限启动安装并退出当前程序：安装器静默升级，完成后重新拉起新版。</summary>
     public static bool ApplyAndRestart(string installerPath)
     {
-        var exe = Environment.ProcessPath ?? Path.Combine(AppContext.BaseDirectory, "Qingqu.exe");
-        var script = Path.Combine(Path.GetTempPath(), "qingqu-update.ps1");
-        var log = Path.Combine(Path.GetTempPath(), "qingqu-update.log");
+        var exe = Environment.ProcessPath ?? Path.Combine(AppContext.BaseDirectory, "Xiaoyu.exe");
+        var script = Path.Combine(Path.GetTempPath(), "xiaoyu-update.ps1");
+        var log = Path.Combine(Path.GetTempPath(), "xiaoyu-update.log");
         Log("apply: 请求管理员权限，安装包=" + installerPath);
         var ps =
             "$ErrorActionPreference='Continue'\r\n" +
             "$log = " + PsQuote(log) + "\r\n" +
             "\"script-start\" | Out-File $log -Append -Encoding utf8\r\n" +
-            // 先等清渠自己退出，否则安装包会因文件被占用而失败
+            // 先等小禹自己退出，否则安装包会因文件被占用而失败
             "for ($i = 0; $i -lt 60; $i++) {\r\n" +
-            "  if (-not (Get-Process Qingqu -ErrorAction SilentlyContinue)) { break }\r\n" +
+            "  if (-not (Get-Process Xiaoyu -ErrorAction SilentlyContinue)) { break }\r\n" +
             "  Start-Sleep -Milliseconds 500\r\n" +
             "}\r\n" +
             "try {\r\n" +

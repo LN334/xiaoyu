@@ -97,7 +97,7 @@ function devicesFor(siteId) {
     type,
     model,
     spec,
-    vendor: type === 'METER' ? '杭州米科传感' : type === 'PLC' ? '西门子（中国）' : type === 'GATEWAY' ? '智赋乡水' : '南方泵业',
+    vendor: type === 'METER' ? '杭州米科传感' : type === 'PLC' ? '西门子（中国）' : type === 'GATEWAY' ? '小禹' : '南方泵业',
     protocol: type === 'PLC' ? 'S7 协议 / Modbus TCP' : type === 'GATEWAY' ? 'MQTT over TLS' : 'Modbus RTU (RS-485)',
     installDate,
     status,

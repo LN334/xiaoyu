@@ -104,7 +104,7 @@ public class MainActivity extends Activity {
 
         LinearLayout titles = U.linear(this, LinearLayout.VERTICAL);
         titles.setPadding(U.dp(this, 9), 0, 0, 0);
-        titles.addView(U.tv(this, "清渠", 16, U.INK, true));
+        titles.addView(U.tv(this, "小禹", 16, U.INK, true));
         titles.addView(U.tv(this, "智慧水处理平台 · 移动端", 9.5f, U.MUTED2, false),
                 U.lpWith(this, U.MATCH, U.WRAP, 0, 2, 0, 0));
         row1.addView(titles, U.lp(0, U.WRAP, 1f));

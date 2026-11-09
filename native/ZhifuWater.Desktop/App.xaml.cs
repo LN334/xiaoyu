@@ -43,7 +43,7 @@ public partial class App : Application
             MessageBox.Show(
                 "界面发生未处理异常：" + Environment.NewLine + args.Exception.Message
                 + Environment.NewLine + Environment.NewLine + args.Exception.GetType().Name,
-                "清渠 · 错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                "小禹 · 错误", MessageBoxButton.OK, MessageBoxImage.Error);
         };
 
         var smoke = e.Args.Any(a => string.Equals(a, "--smoke", StringComparison.OrdinalIgnoreCase));

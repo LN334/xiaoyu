@@ -23,8 +23,8 @@ public class AppShot {
   }
 }
 "@
-$proc = Get-Process Qingqu -ErrorAction SilentlyContinue | Select-Object -First 1
-if (-not $proc) { throw 'Qingqu not running' }
+$proc = Get-Process Xiaoyu -ErrorAction SilentlyContinue | Select-Object -First 1
+if (-not $proc) { throw 'Xiaoyu not running' }
 $wins = [AppShot]::ForPid([uint32]$proc.Id)
 if ($wins.Count -eq 0) { throw 'no visible window' }
 $items = @()

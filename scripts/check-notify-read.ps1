@@ -1,6 +1,6 @@
 ﻿Add-Type -AssemblyName UIAutomationClient
 Add-Type -AssemblyName UIAutomationTypes
-$exe = 'D:\智赋乡水平台\native\ZhifuWater.Desktop\bin\Release\net8.0-windows\Qingqu.exe'
+$exe = 'D:\智赋乡水平台\native\ZhifuWater.Desktop\bin\Release\net8.0-windows\Xiaoyu.exe'
 $p = Start-Process -FilePath $exe -ArgumentList '--main' -PassThru
 Start-Sleep -Seconds 3
 $root = [System.Windows.Automation.AutomationElement]::RootElement

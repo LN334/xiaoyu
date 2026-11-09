@@ -1,4 +1,4 @@
-# 清渠 · 原生安卓客户端
+# 小禹 · 原生安卓客户端
 
 完全原生实现：Java + Android 框架 API，无 WebView、Gradle、AndroidX 或第三方依赖。界面由 Java 代码构建。
 

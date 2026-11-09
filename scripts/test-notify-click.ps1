@@ -16,7 +16,7 @@ function Shot($rect, $path) {
   $bmp.Save($path, [System.Drawing.Imaging.ImageFormat]::Png)
   $g.Dispose(); $bmp.Dispose()
 }
-$p = Start-Process -FilePath 'D:\智赋乡水平台\native\publish\Qingqu.exe' -ArgumentList '--main','--page=dashboard' -PassThru
+$p = Start-Process -FilePath 'D:\智赋乡水平台\native\publish\Xiaoyu.exe' -ArgumentList '--main','--page=dashboard' -PassThru
 Start-Sleep -Seconds 4
 $root = [System.Windows.Automation.AutomationElement]::RootElement
 $cond = New-Object System.Windows.Automation.PropertyCondition([System.Windows.Automation.AutomationElement]::ProcessIdProperty, $p.Id)

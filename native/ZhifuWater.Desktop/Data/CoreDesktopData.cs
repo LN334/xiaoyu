@@ -39,8 +39,6 @@ public sealed class CoreDesktopData : IDesktopData
         {
             Path.Combine(AppContext.BaseDirectory, "seed", "db.json"),
             Path.Combine(AppContext.BaseDirectory, "data", "db.json"),
-            @"D:\清渠平台\native\seed\db.json",
-            @"D:\清渠平台\data\db.json",
         }.FirstOrDefault(File.Exists);
         if (seed is not null) options.SeedSource = seed;
         _core = new CoreServices(options);
@@ -60,7 +58,7 @@ public sealed class CoreDesktopData : IDesktopData
     {
         try
         {
-            var result = _core.Auth.Login(username.Trim(), password, "desktop", "Qingqu WPF/.NET 8");
+            var result = _core.Auth.Login(username.Trim(), password, "desktop", "Xiaoyu WPF/.NET 8");
             lock (_gate)
             {
                 _token = result.Token;
@@ -136,7 +134,7 @@ public sealed class CoreDesktopData : IDesktopData
             _core.Audit.Write(_user, "user.password", "user", J.Str(u, "id"), "修改本人登录密码", null!, null!, "", "success");
         }
         catch { }
-        _token = _core.Auth.Login(J.Str(u, "username"), newPassword, "desktop", "Qingqu WPF/.NET 8").Token;
+        _token = _core.Auth.Login(J.Str(u, "username"), newPassword, "desktop", "Xiaoyu WPF/.NET 8").Token;
         return OpResult.Done("密码已修改，请使用新密码登录");
     }
 

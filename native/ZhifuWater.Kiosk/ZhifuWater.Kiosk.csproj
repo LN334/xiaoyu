@@ -5,13 +5,13 @@
     <UseWPF>true</UseWPF>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyName>QingquKiosk</AssemblyName>
+    <AssemblyName>XiaoyuKiosk</AssemblyName>
     <RootNamespace>ZhifuWater.Kiosk</RootNamespace>
     <ApplicationIcon>..\..\desktop\build\icon.ico</ApplicationIcon>
     <Version>2.0.19</Version>
     <Company>LN334</Company>
-    <Product>清渠 · 现场触摸屏</Product>
-    <AssemblyTitle>清渠 · 现场触摸屏</AssemblyTitle>
+    <Product>小禹 · 现场触摸屏</Product>
+    <AssemblyTitle>小禹 · 现场触摸屏</AssemblyTitle>
     <InvariantGlobalization>false</InvariantGlobalization>
   </PropertyGroup>
   <ItemGroup>

@@ -3,16 +3,17 @@
 !include "FileFunc.nsh"
 !include "LogicLib.nsh"
 
-!define APP_NAME "清渠"
-!define APP_FULL "清渠 · 村镇水处理站智能运维平台"
+!define APP_NAME "小禹"
+!define APP_FULL "小禹 · 村镇水处理站智能运维平台"
 !define APP_VERSION "2.0.20"
 !define APP_PUBLISHER "LN334"
-!define APP_EXE "Qingqu.exe"
-!define REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\QingquNative"
+!define APP_EXE "Xiaoyu.exe"
+!define REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\XiaoyuNative"
 !define LEGACY_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\ZhifuWaterNative"
+!define LEGACY_REG_KEY_QINGQU "Software\Microsoft\Windows\CurrentVersion\Uninstall\QingquNative"
 
 Name "${APP_FULL}"
-OutFile "Qingqu-Setup-${APP_VERSION}.exe"
+OutFile "Xiaoyu-Setup-${APP_VERSION}.exe"
 InstallDir "$PROGRAMFILES64\${APP_NAME}"
 InstallDirRegKey HKLM "${REG_KEY}" "InstallDir"
 RequestExecutionLevel admin
@@ -33,7 +34,7 @@ BrandingText "${APP_NAME} ${APP_VERSION}"
 !define MUI_FINISHPAGE_RUN "$INSTDIR\${APP_EXE}"
 !define MUI_FINISHPAGE_RUN_TEXT "立即运行 ${APP_NAME}"
 !define MUI_FINISHPAGE_LINK "打开项目主页"
-!define MUI_FINISHPAGE_LINK_LOCATION "https://github.com/LN334/qingqu"
+!define MUI_FINISHPAGE_LINK_LOCATION "https://github.com/LN334/xiaoyu"
 
 !define MUI_COMPONENTSPAGE_TEXT_TOP "选择要安装的内容，然后点击「下一步」。"
 !insertmacro MUI_PAGE_WELCOME
@@ -62,6 +63,15 @@ Section "主程序（必需）" SecMain
   IfFileExists "$PROGRAMFILES64\智赋乡水\ZhifuWater.exe" 0 +2
     RMDir /r "$PROGRAMFILES64\智赋乡水"
 
+  ; 「清渠」旧版迁移清理：改名前的安装目录、快捷方式与卸载项
+  Delete "$DESKTOP\清渠.lnk"
+  Delete "$SMPROGRAMS\清渠\清渠.lnk"
+  Delete "$SMPROGRAMS\清渠\卸载 清渠.lnk"
+  RMDir "$SMPROGRAMS\清渠"
+  DeleteRegKey HKLM "${LEGACY_REG_KEY_QINGQU}"
+  IfFileExists "$PROGRAMFILES64\清渠\Qingqu.exe" 0 +2
+    RMDir /r "$PROGRAMFILES64\清渠"
+
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
   CreateDirectory "$SMPROGRAMS\${APP_NAME}"
@@ -87,8 +97,8 @@ Section "桌面快捷方式" SecDesktop
 SectionEnd
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecMain} "清渠桌面端主程序，包含运行总览、工艺流程、告警与工单等全部功能。"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecDesktop} "在桌面创建「清渠」快捷方式，方便直接打开。"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecMain} "小禹桌面端主程序，包含运行总览、工艺流程、告警与工单等全部功能。"
+  !insertmacro MUI_DESCRIPTION_TEXT ${SecDesktop} "在桌面创建「小禹」快捷方式，方便直接打开。"
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ; ---- 卸载 ----

@@ -17,7 +17,7 @@
   },
   "build": {
     "appId": "com.ln334.zhifuwater",
-    "productName": "智赋乡水",
+    "productName": "小禹",
     "copyright": "Copyright © 2026 LN334",
     "asar": false,
     "npmRebuild": false,
@@ -52,7 +52,7 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "智赋乡水·智慧水处理平台",
+      "shortcutName": "小禹·村镇水处理站智能运维平台",
       "runAfterFinish": true,
       "installerLanguages": [
         "zh_CN"

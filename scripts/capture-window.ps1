@@ -9,8 +9,8 @@ public class WinCap {
   [DllImport("user32.dll")] public static extern bool PrintWindow(IntPtr h, IntPtr hdc, uint flags);
 }
 "@
-$p = Get-Process Qingqu -ErrorAction SilentlyContinue | Select-Object -First 1
-if (-not $p) { throw 'Qingqu not running' }
+$p = Get-Process Xiaoyu -ErrorAction SilentlyContinue | Select-Object -First 1
+if (-not $p) { throw 'Xiaoyu not running' }
 $h = $p.MainWindowHandle
 $r = New-Object WinCap+RECT
 [WinCap]::GetWindowRect($h, [ref]$r) | Out-Null

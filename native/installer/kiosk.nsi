@@ -2,15 +2,16 @@
 !include "MUI2.nsh"
 !include "FileFunc.nsh"
 
-!define APP_NAME "清渠现场触摸屏"
-!define APP_FULL "清渠 · 现场触摸屏"
+!define APP_NAME "小禹现场触摸屏"
+!define APP_FULL "小禹 · 现场触摸屏"
 !define APP_VERSION "2.0.19"
 !define APP_PUBLISHER "LN334"
-!define APP_EXE "QingquKiosk.exe"
-!define REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\QingquKioskNative"
+!define APP_EXE "XiaoyuKiosk.exe"
+!define REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\XiaoyuKioskNative"
+!define LEGACY_REG_KEY_QINGQU "Software\Microsoft\Windows\CurrentVersion\Uninstall\QingquKioskNative"
 
 Name "${APP_FULL}"
-OutFile "Qingqu-Kiosk-Setup-${APP_VERSION}.exe"
+OutFile "Xiaoyu-Kiosk-Setup-${APP_VERSION}.exe"
 InstallDir "$PROGRAMFILES64\${APP_NAME}"
 InstallDirRegKey HKLM "${REG_KEY}" "InstallDir"
 RequestExecutionLevel admin
@@ -32,6 +33,16 @@ Section "现场触摸屏程序" SecMain
   SectionIn RO
   SetOutPath "$INSTDIR"
   File /r "..\publish-kiosk\*.*"
+
+  ; 「清渠」旧版迁移清理：改名前的安装目录、快捷方式、开机自启与卸载项
+  Delete "$DESKTOP\清渠 · 现场触摸屏.lnk"
+  Delete "$SMPROGRAMS\清渠现场触摸屏\清渠 · 现场触摸屏.lnk"
+  Delete "$SMPROGRAMS\清渠现场触摸屏\卸载 清渠 · 现场触摸屏.lnk"
+  RMDir "$SMPROGRAMS\清渠现场触摸屏"
+  Delete "$SMSTARTUP\清渠 · 现场触摸屏.lnk"
+  DeleteRegKey HKLM "${LEGACY_REG_KEY_QINGQU}"
+  IfFileExists "$PROGRAMFILES64\清渠现场触摸屏\QingquKiosk.exe" 0 +2
+    RMDir /r "$PROGRAMFILES64\清渠现场触摸屏"
 
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 

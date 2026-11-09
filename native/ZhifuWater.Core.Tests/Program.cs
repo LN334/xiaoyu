@@ -560,9 +560,9 @@ internal static class Program
         {
             ["autoRefreshSec"] = 9,
             ["commandTimeoutSec"] = 45,
-            ["platformName"] = "智赋乡水平台（自测）",
+            ["platformName"] = "小禹（自测）",
         }, "127.0.0.1");
-        Eq("设置已更新", "智赋乡水平台（自测）", J.Str(patched, "platformName"));
+        Eq("设置已更新", "小禹（自测）", J.Str(patched, "platformName"));
         Eq("数字项被接受", 9, (int)(J.Num(patched, "autoRefreshSec") ?? 0));
         var clamped = core.Admin.UpdateSettings(admin, new JsonObject { ["autoRefreshSec"] = 999 }, "127.0.0.1");
         Eq("超范围数字被夹到上限", 60, (int)(J.Num(clamped, "autoRefreshSec") ?? 0));

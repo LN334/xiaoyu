@@ -341,7 +341,7 @@ internal static class DemoCatalog
     {
         new() { Id = "ch-sms", Name = "短信通知", Type = "sms", Enabled = true, Target = "值班手机 138****1136", LastTestAt = "2026-10-26 09:12", LastResult = "成功" },
         new() { Id = "ch-wecom", Name = "企业微信机器人", Type = "wecom", Enabled = true, Target = "运维群 / 告警机器人", LastTestAt = "2026-10-26 09:12", LastResult = "成功" },
-        new() { Id = "ch-email", Name = "邮件日报", Type = "email", Enabled = false, Target = "ops@qingqu.example", LastTestAt = "2026-10-24 18:00", LastResult = "未启用" },
+        new() { Id = "ch-email", Name = "邮件日报", Type = "email", Enabled = false, Target = "ops@xiaoyu.example", LastTestAt = "2026-10-24 18:00", LastResult = "未启用" },
         new() { Id = "ch-webhook", Name = "上级平台推送", Type = "http", Enabled = true, Target = "https://gov.example/api/water/report", LastTestAt = "2026-10-25 22:30", LastResult = "成功" },
     };
 }

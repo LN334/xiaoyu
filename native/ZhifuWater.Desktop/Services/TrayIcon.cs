@@ -61,7 +61,7 @@ public static class TrayIcon
         _icon = new WF.NotifyIcon
         {
             Icon = LoadIcon(),
-            Text = "清渠 · 村镇水处理站智能运维平台",
+            Text = "小禹 · 村镇水处理站智能运维平台",
             Visible = true
         };
         _icon.MouseUp += (_, e) =>
@@ -97,14 +97,24 @@ public static class TrayIcon
     }
 
     private const string RunKey = @"Software\Microsoft\Windows\CurrentVersion\Run";
-    private const string RunName = "Qingqu";
+    private const string RunName = "Xiaoyu";
+    /// <summary>改名前的自启项名，读到时迁成新名字再清掉。</summary>
+    private const string LegacyRunName = "Qingqu";
 
     public static bool IsAutoStartEnabled()
     {
         try
         {
             using var key = Registry.CurrentUser.OpenSubKey(RunKey);
-            return !string.IsNullOrEmpty(key?.GetValue(RunName) as string);
+            if (key is null) return false;
+            if (!string.IsNullOrEmpty(key.GetValue(RunName) as string)) return true;
+            // 老版本（清渠）开过自启：沿用这个设置，换成新名字
+            if (!string.IsNullOrEmpty(key.GetValue(LegacyRunName) as string))
+            {
+                SetAutoStart(true);
+                return true;
+            }
+            return false;
         }
         catch { return false; }
     }
@@ -123,6 +133,8 @@ public static class TrayIcon
         {
             key.DeleteValue(RunName, throwOnMissingValue: false);
         }
+        // 旧名字的自启项一律清掉，避免重启后同时拉起新旧两个程序
+        try { key.DeleteValue(LegacyRunName, throwOnMissingValue: false); } catch { }
     }
 
     public static void UpdateTooltip(string text)
@@ -188,7 +200,7 @@ public static class TrayIcon
             panel.Children.Add(Row("\uE8A7", "打开主界面", Ink, open, out _));
             panel.Children.Add(Row("\uE7E8", "开机自动启动", Ink, toggleAuto, out _autoGlyph));
             panel.Children.Add(Separator());
-            panel.Children.Add(Row("\uE711", "退出清渠", Danger, exit, out _, danger: true));
+            panel.Children.Add(Row("\uE711", "退出小禹", Danger, exit, out _, danger: true));
 
             Content = new Border
             {

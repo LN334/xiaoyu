@@ -172,7 +172,7 @@ public sealed class UpdateDialog : Window
             _installer = await UpdateService.DownloadAsync(_info, progress, cts.Token);
             _bar.Value = 100;
             _status.Foreground = Pal.Good;
-            _status.Text = "已下载并通过校验。点击「立即安装」，清渠会关闭并在安装完成后自动打开。";
+            _status.Text = "已下载并通过校验。点击「立即安装」，小禹会关闭并在安装完成后自动打开。";
             _primary.Content = "立即安装";
             _primary.IsEnabled = true;
         }
