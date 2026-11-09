@@ -1,5 +1,5 @@
 const fs = require('fs');
-const p = 'D:/智赋乡水平台/native/ZhifuWater.Desktop/Pages/ProcessPage.cs';
+const p = 'D:/小禹/native/ZhifuWater.Desktop/Pages/ProcessPage.cs';
 let raw = fs.readFileSync(p, 'utf8');
 const crlf = raw.includes('\r\n');
 let s = raw.replace(/\r\n/g, '\n');

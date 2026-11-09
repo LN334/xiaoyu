@@ -1,5 +1,5 @@
 const fs = require('fs');
-const base = 'D:/智赋乡水平台/android/';
+const base = 'D:/小禹/android/';
 function load(rel) { return { rel, s: fs.readFileSync(base + rel).toString('utf8').replace(/\r\n/g, '\n') }; }
 function save(f) { fs.writeFileSync(base + f.rel, f.s.replace(/\n/g, '\r\n'), 'utf8'); }
 function rep(f, a, b) { if (f.s.split(a).length !== 2) throw new Error(f.rel + ' x' + (f.s.split(a).length - 1) + ': ' + a.slice(0, 60)); f.s = f.s.replace(a, b); }

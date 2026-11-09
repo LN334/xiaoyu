@@ -1,5 +1,5 @@
 const fs = require('fs');
-const base = 'D:/智赋乡水平台/native/ZhifuWater.Desktop/';
+const base = 'D:/小禹/native/ZhifuWater.Desktop/';
 
 function load(rel) {
   const raw = fs.readFileSync(base + rel);

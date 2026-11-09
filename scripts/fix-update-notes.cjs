@@ -1,5 +1,5 @@
 const fs = require('fs');
-const p = 'D:/智赋乡水平台/native/ZhifuWater.Desktop/Windows/UpdateDialog.cs';
+const p = 'D:/小禹/native/ZhifuWater.Desktop/Windows/UpdateDialog.cs';
 let s = fs.readFileSync(p, 'utf8');
 const start = s.indexOf('    private static string CleanNotes(string? raw)');
 const end = s.indexOf('    private async void OnPrimaryClick()');

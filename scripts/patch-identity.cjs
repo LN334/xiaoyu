@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const root = 'D:/智赋乡水平台/native/ZhifuWater.Desktop';
+const root = 'D:/小禹/native/ZhifuWater.Desktop';
 
 function edit(rel, fn) {
   const p = path.join(root, rel);

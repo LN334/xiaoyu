@@ -9,7 +9,7 @@ public sealed class CoreServicesOptions
     public string DataDir { get; set; } = DefaultDataDir();
 
     /// <summary>首次运行时复制的初始快照来源（Node 版 <c>data/db.json</c>）。设为 null 则要求目录里已有数据。</summary>
-    public string? SeedSource { get; set; } = @"D:\智赋乡水平台\data\db.json";
+    public string? SeedSource { get; set; } = @"D:\小禹\data\db.json";
 
     /// <summary>构造后立即 <see cref="CoreServices.Start"/>。</summary>
     public bool AutoStart { get; set; } = true;

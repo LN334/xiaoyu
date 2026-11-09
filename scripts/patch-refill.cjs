@@ -1,5 +1,5 @@
 const fs = require('fs');
-const base = 'D:/智赋乡水平台/native/ZhifuWater.Core/';
+const base = 'D:/小禹/native/ZhifuWater.Core/';
 function load(rel) {
   const raw = fs.readFileSync(base + rel);
   const bom = raw[0] === 0xEF && raw[1] === 0xBB && raw[2] === 0xBF;

@@ -16,7 +16,7 @@ function ed(p, subs) {
   console.log('ok', p);
 }
 
-const root = 'D:/智赋乡水平台/native/ZhifuWater.Desktop/';
+const root = 'D:/小禹/native/ZhifuWater.Desktop/';
 
 ed(root + 'Styles.xaml', [[
 `    <Style TargetType="TextBlock">

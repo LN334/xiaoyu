@@ -1,7 +1,7 @@
 ﻿Add-Type -AssemblyName UIAutomationClient
 Add-Type -AssemblyName UIAutomationTypes
 Add-Type -AssemblyName System.Drawing
-$exe = 'D:\智赋乡水平台\native\ZhifuWater.Desktop\bin\Release\net8.0-windows\Xiaoyu.exe'
+$exe = 'D:\小禹\native\ZhifuWater.Desktop\bin\Release\net8.0-windows\Xiaoyu.exe'
 $p = Start-Process -FilePath $exe -ArgumentList '--main' -PassThru
 Start-Sleep -Seconds 3
 $root = [System.Windows.Automation.AutomationElement]::RootElement
@@ -24,7 +24,7 @@ function Shot($path) {
   $bmp.Save($path, [System.Drawing.Imaging.ImageFormat]::Png)
   $g.Dispose(); $bmp.Dispose()
 }
-Shot 'D:\智赋乡水平台\_notify-before.png'
+Shot 'D:\小禹\_notify-before.png'
 $bell = Find-Id 'bell'
 if ($bell -ne $null) {
   $bell.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
@@ -35,5 +35,5 @@ if ($bell -ne $null) {
     Start-Sleep -Milliseconds 1200
   } else { Write-Output 'mark button missing' }
 } else { Write-Output 'bell missing' }
-Shot 'D:\智赋乡水平台\_notify-after.png'
+Shot 'D:\小禹\_notify-after.png'
 $p.Kill()

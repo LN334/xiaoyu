@@ -1,5 +1,5 @@
 const fs = require('fs');
-const p = 'D:/智赋乡水平台/native/ZhifuWater.Desktop/Pages/DashboardPage.cs';
+const p = 'D:/小禹/native/ZhifuWater.Desktop/Pages/DashboardPage.cs';
 let raw = fs.readFileSync(p);
 const bom = raw[0] === 0xEF && raw[1] === 0xBB && raw[2] === 0xBF;
 let s = raw.toString('utf8'); if (bom) s = s.slice(1);

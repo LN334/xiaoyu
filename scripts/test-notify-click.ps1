@@ -16,7 +16,7 @@ function Shot($rect, $path) {
   $bmp.Save($path, [System.Drawing.Imaging.ImageFormat]::Png)
   $g.Dispose(); $bmp.Dispose()
 }
-$p = Start-Process -FilePath 'D:\智赋乡水平台\native\publish\Xiaoyu.exe' -ArgumentList '--main','--page=dashboard' -PassThru
+$p = Start-Process -FilePath 'D:\小禹\native\publish\Xiaoyu.exe' -ArgumentList '--main','--page=dashboard' -PassThru
 Start-Sleep -Seconds 4
 $root = [System.Windows.Automation.AutomationElement]::RootElement
 $cond = New-Object System.Windows.Automation.PropertyCondition([System.Windows.Automation.AutomationElement]::ProcessIdProperty, $p.Id)
@@ -41,6 +41,6 @@ $cx = [int]($r.X + $r.Width / 2); $cy = [int]($r.Y + $r.Height / 2)
 [W]::mouse_event(0x0004, 0, 0, 0, [IntPtr]::Zero)
 Start-Sleep -Milliseconds 1800
 $wr = $win.Current.BoundingRectangle
-Shot $wr 'D:\智赋乡水平台\_notify-click.png'
+Shot $wr 'D:\小禹\_notify-click.png'
 $p.Kill()
 Write-Output ('clicked ' + $cx + ',' + $cy)

@@ -1,6 +1,6 @@
 const fs = require('fs');
 function edit(rel, oldText, newText) {
-  const p = 'D:/智赋乡水平台/' + rel;
+  const p = 'D:/小禹/' + rel;
   const raw = fs.readFileSync(p, 'utf8');
   const crlf = raw.includes('\r\n');
   let s = raw.replace(/\r\n/g, '\n');

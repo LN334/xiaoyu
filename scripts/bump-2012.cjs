@@ -1,5 +1,5 @@
 const fs = require('fs');
-const base = 'D:/智赋乡水平台/';
+const base = 'D:/小禹/';
 const simple = [
   'package.json',
   'native/ZhifuWater.Desktop/ZhifuWater.Desktop.csproj',

@@ -1,4 +1,4 @@
-param([string]$Out = 'D:\智赋乡水平台\_app.png')
+param([string]$Out = 'D:\小禹\_app.png')
 Add-Type -AssemblyName System.Drawing
 Add-Type @"
 using System;

@@ -1,5 +1,5 @@
 const fs = require('fs');
-const p = 'D:/智赋乡水平台/android/src/com/ln334/zhifuwater/ProfilePage.java';
+const p = 'D:/小禹/android/src/com/ln334/zhifuwater/ProfilePage.java';
 let s = fs.readFileSync(p, 'utf8');
 if (s.includes('检查更新')) { console.log('already patched'); process.exit(0); }
 if (!s.includes('import android.net.Uri;')) {

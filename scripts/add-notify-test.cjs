@@ -1,5 +1,5 @@
 const fs = require('fs');
-const p = 'D:/智赋乡水平台/native/ZhifuWater.Core.Tests/Program.cs';
+const p = 'D:/小禹/native/ZhifuWater.Core.Tests/Program.cs';
 let s = fs.readFileSync(p, 'utf8');
 if (s.includes('通知：全部标为已读')) { console.log('already'); process.exit(0); }
 const anchor = '        /* ================= 14. 数据持久化 ================= */';

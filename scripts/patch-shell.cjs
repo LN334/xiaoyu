@@ -16,7 +16,7 @@ function edit(p, subs) {
   console.log('patched', p);
 }
 
-const root = 'D:/智赋乡水平台/native/ZhifuWater.Desktop/';
+const root = 'D:/小禹/native/ZhifuWater.Desktop/';
 
 edit(root + 'Windows/MainWindow.xaml.cs', [
   [`        SidebarSource.Text = "本机业务层 · 每 5 秒刷新";\n        FooterSource.Text = "本机业务层";\n`, ''],

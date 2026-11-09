@@ -1,5 +1,5 @@
 const fs = require('fs');
-const p = 'D:/智赋乡水平台/android/test/static-check.js';
+const p = 'D:/小禹/android/test/static-check.js';
 const bs = String.fromCharCode(92);
 const oldText = '2' + bs + '.2' + bs + '.1';
 const newText = '2' + bs + '.0' + bs + '.12';

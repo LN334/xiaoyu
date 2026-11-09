@@ -1,6 +1,6 @@
 const fs = require('fs');
 function edit(rel, fn) {
-  const p = 'D:/智赋乡水平台/' + rel;
+  const p = 'D:/小禹/' + rel;
   let s = fs.readFileSync(p, 'utf8');
   const out = fn(s);
   if (out === s) console.log('unchanged ' + rel);

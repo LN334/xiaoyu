@@ -1,5 +1,5 @@
 const fs = require('fs');
-const p = 'D:/智赋乡水平台/README.md';
+const p = 'D:/小禹/README.md';
 let raw = fs.readFileSync(p, 'utf8');
 const bom = raw[0] === '\uFEFF';
 let s = raw.replace(/^\uFEFF/, '');

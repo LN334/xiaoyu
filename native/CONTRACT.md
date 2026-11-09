@@ -12,11 +12,11 @@
 using ZhifuWater.Core;
 using System.Text.Json.Nodes;
 
-// 数据目录（首次运行自动从 D:\智赋乡水平台\data\db.json 复制一份作为私有副本）
+// 数据目录（首次运行自动从 D:\小禹\data\db.json 复制一份作为私有副本）
 var core = new CoreServices(new CoreServicesOptions
 {
     DataDir    = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ZhifuWater"),
-    SeedSource = @"D:\智赋乡水平台\data\db.json",
+    SeedSource = @"D:\小禹\data\db.json",
     AutoStart  = true,     // 构造后自动启动模拟网关与告警规则引擎
     SpeedFactor = 1.0      // >1 加速（调试用），1.0 = 真实 5 秒 tick
 });
@@ -44,7 +44,7 @@ core.Dispose();   // = Stop() + 落盘 + 释放定时器
 
 | 成员 | 说明 |
 | --- | --- |
-| `CoreServices()` | 全部默认值（数据目录 = `%LOCALAPPDATA%\ZhifuWater`，种子 = `D:\智赋乡水平台\data\db.json`，自动启动） |
+| `CoreServices()` | 全部默认值（数据目录 = `%LOCALAPPDATA%\ZhifuWater`，种子 = `D:\小禹\data\db.json`，自动启动） |
 | `CoreServices(string dataDir, string? seedSource = null, bool autoStart = true)` | 常用简化构造 |
 | `CoreServices(CoreServicesOptions options)` | 完整构造 |
 | `Start()` | 幂等。`Simulator.Start()`（含 30 天历史回填）→ `Rules.Start()` → `Commands.Recover()` → `Auth.CleanupSessions()` |
@@ -150,7 +150,7 @@ public event Action<Exception>? Error;              // 落盘失败等内部异�
 public sealed class CoreServicesOptions
 {
     public string  DataDir { get; set; } = DefaultDataDir();     // %LOCALAPPDATA%\ZhifuWater
-    public string? SeedSource { get; set; } = @"D:\智赋乡水平台\data\db.json";
+    public string? SeedSource { get; set; } = @"D:\小禹\data\db.json";
     public bool    AutoStart { get; set; } = true;
     public double  SpeedFactor { get; set; } = 1.0;
     public bool    CopySeedOnFirstRun { get; set; } = true;
@@ -513,7 +513,7 @@ public static IReadOnlyDictionary<string,string> REPORT_TYPES;         // daily/
 ## 16. 自测
 
 ```
-cd D:\智赋乡水平台
+cd D:\小禹
 dotnet build native/ZhifuWater.Core/ZhifuWater.Core.csproj        # 0 警告 0 错误
 dotnet run --project native/ZhifuWater.Core.Tests                 # CORE-TESTS PASS 174/174
 ```
