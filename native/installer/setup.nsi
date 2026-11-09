@@ -5,7 +5,7 @@
 
 !define APP_NAME "小禹"
 !define APP_FULL "小禹 · 村镇水处理站智能运维平台"
-!define APP_VERSION "2.0.20"
+!define APP_VERSION "2.0.21"
 !define APP_PUBLISHER "LN334"
 !define APP_EXE "Xiaoyu.exe"
 !define REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\XiaoyuNative"

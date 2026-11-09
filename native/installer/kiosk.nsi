@@ -4,7 +4,7 @@
 
 !define APP_NAME "小禹现场触摸屏"
 !define APP_FULL "小禹 · 现场触摸屏"
-!define APP_VERSION "2.0.19"
+!define APP_VERSION "2.0.21"
 !define APP_PUBLISHER "LN334"
 !define APP_EXE "XiaoyuKiosk.exe"
 !define REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\XiaoyuKioskNative"

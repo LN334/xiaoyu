@@ -8,7 +8,7 @@
     <AssemblyName>XiaoyuKiosk</AssemblyName>
     <RootNamespace>ZhifuWater.Kiosk</RootNamespace>
     <ApplicationIcon>..\..\desktop\build\icon.ico</ApplicationIcon>
-    <Version>2.0.19</Version>
+    <Version>2.0.21</Version>
     <Company>LN334</Company>
     <Product>小禹 · 现场触摸屏</Product>
     <AssemblyTitle>小禹 · 现场触摸屏</AssemblyTitle>
