@@ -194,6 +194,16 @@ zhifu-water-platform/
 
 ## 六、构建
 
+### 发布门禁（先跑这个）
+
+```bash
+npm run check        # 审计 + 两端构建 + Web 测试 + 桌面自检，一条命令回答「能不能发」
+npm run audit        # 只跑一致性审计：版本号 / 三端种子 / 旧品牌残留 / 文档引用 / 零依赖
+npm test             # 只跑 Web 服务端测试（node:test，零依赖）
+```
+
+各道闸门查什么、为什么这么查，见 [docs/WORKFLOW.md](docs/WORKFLOW.md)。
+
 ### 桌面端（需 .NET SDK 8）
 
 ```powershell

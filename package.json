@@ -7,10 +7,13 @@
   "scripts": {
     "start": "node server/index.js",
     "dev": "node server/index.js --dev",
-    "reset": "node server/index.js --reset"
+    "reset": "node server/index.js --reset",
+    "test": "node --test \"server/test/*.test.mjs\"",
+    "audit": "node scripts/audit.mjs",
+    "check": "node scripts/check.mjs"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20.1"
   },
   "license": "UNLICENSED"
 }

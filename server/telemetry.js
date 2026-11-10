@@ -76,9 +76,15 @@ class Telemetry {
       const points = [];
       for (const [t, b] of [...buckets.entries()].sort((a, b2) => a[0] - b2[0])) {
         let v;
-        if (type === 'measure') v = b.n ? b.sum / b.n : b.last;
-        else v = b.last;
-        points.push({ t, v: Math.round(v * 1000) / 1000, q: b.q || 'good' });
+        if (type === 'measure') {
+          // 该时段只有非数值样本时不产点：Math.round('run' * 1000) 会变成 NaN，JSON 后是 null，曲线断点
+          if (!b.n) continue;
+          v = Math.round((b.sum / b.n) * 1000) / 1000;
+        } else {
+          // state/counter 可能是枚举字符串，只对数字取整
+          v = typeof b.last === 'number' ? Math.round(b.last * 1000) / 1000 : b.last;
+        }
+        points.push({ t, v, q: b.q || 'good' });
       }
       out[pid] = points;
     }

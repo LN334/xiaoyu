@@ -237,9 +237,11 @@ class CommandEngine {
   recover() {
     let n = 0;
     for (const cmd of this.db.commands) {
-      if (['pending_dispatch', 'sent', 'executing'].includes(cmd.status)) {
+      // 待确认是等人操作，给它更长的窗口；超过 30 分钟仍挂在重启点，说明没人跟进
+      const waitMs = cmd.status === 'pending_confirm' ? 30 * 60 * 1000 : 5 * 60 * 1000;
+      if (['pending_confirm', 'pending_dispatch', 'sent', 'executing'].includes(cmd.status)) {
         const age = Date.now() - new Date(cmd.createdAt).getTime();
-        if (age > 5 * 60 * 1000) {
+        if (age > waitMs) {
           cmd.status = 'timeout';
           cmd.finishedAt = iso();
           cmd.failReason = '服务重启，命令回执丢失；请现场确认设备状态';
