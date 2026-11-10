@@ -26,6 +26,10 @@ desktop/build/*.txt
 desktop/build/exe_icon_32.png
 desktop/build/apk_icon_check.png
 
+# 一次性预览工程与截图（历史工具，不入库）
+_trayprev/
+_tray-preview*.png
+
 # 系统
 .DS_Store
 Thumbs.db

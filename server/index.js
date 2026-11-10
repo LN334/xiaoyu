@@ -1,6 +1,6 @@
 'use strict';
 /**
- * 智赋乡水 · 智慧水处理平台 —— 服务入口。
+ * 小禹 · 村镇水处理站智能运维平台 —— 服务入口。
  * 零第三方依赖：Node 内置 http + 静态资源 + WebSocket + JSON 文件存储 + 内置模拟网关。
  *
  * 用法：
@@ -42,7 +42,7 @@ function parseArgs(argv) {
 
 const args = parseArgs(process.argv.slice(2));
 if (args.help) {
-  console.log(`智赋乡水 · 智慧水处理平台
+  console.log(`小禹 · 村镇水处理站智能运维平台
 
 用法: node server/index.js [选项]
   --port, -p <端口>   监听端口（默认 8765）

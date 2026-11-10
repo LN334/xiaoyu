@@ -15,7 +15,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo   智赋乡水 · 智慧水处理平台
+echo   小禹 · 村镇水处理站智能运维平台
 echo   正在启动，浏览器将自动打开 http://127.0.0.1:8765
 echo   演示账号：admin / water123
 echo   关闭本窗口即停止服务。
