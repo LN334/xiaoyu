@@ -82,7 +82,7 @@ function seedOps(now, assets) {
     },
     {
       id: 'AL-20261024-007', siteId: site2, pointId: 'pt-site-2-raw-lvl', pointCode: 'RAW.LVL', unitCode: 'raw',
-      level: 'minor', title: '原料罐液位偏低（碧山站）', detail: '检测值 24.1 %，低于 25 % 提醒值，已转交现场值班处理。',
+      level: 'minor', title: '原料罐液位偏低（义乌站）', detail: '检测值 24.1 %，低于 25 % 提醒值，已转交现场值班处理。',
       status: 'acknowledged', value: 24.1, threshold: '≥ 25 %', ruleId: 'rule-6',
       firstAt: iso(now - 6 * H), lastAt: iso(now - 25 * M), ackAt: iso(now - 4 * H), ackBy: 'u-7', resolvedAt: null, resolvedBy: null,
       count: 2, source: 'rule', notifyChannels: ['inapp'],
@@ -158,7 +158,7 @@ function seedOps(now, assets) {
       slaHours: 48,
     },
     {
-      id: 'WO-20261023-005', siteId: site2, title: '碧山站液位计通讯间歇排查', type: 'repair', priority: 'normal',
+      id: 'WO-20261023-005', siteId: site2, title: '义乌站液位计通讯间歇排查', type: 'repair', priority: 'normal',
       status: 'done', source: 'manual', alarmId: null, unitCode: 'raw', deviceId: 'dev-site-2-raw-level',
       assigneeId: 'u-7', creatorId: 'u-7', createdAt: iso(now - 30 * H), dueAt: iso(now - 20 * H),
       acceptedAt: iso(now - 29 * H), startedAt: iso(now - 28 * H), finishedAt: iso(now - 22 * H), verifiedAt: null,
@@ -210,7 +210,7 @@ function seedOps(now, assets) {
       ],
     },
     {
-      id: 'plan-3', siteId: site2, name: '碧山站每日巡检', cycle: 'daily', timeOfDay: '09:00', enabled: true,
+      id: 'plan-3', siteId: site2, name: '义乌站每日巡检', cycle: 'daily', timeOfDay: '09:00', enabled: true,
       items: [
         { key: 'b1', label: '核对原料罐与清水池液位', standard: '与标尺一致' },
         { key: 'b2', label: '检查加药系统与药箱', standard: '投加正常、液位充足' },
@@ -227,7 +227,7 @@ function seedOps(now, assets) {
       items: taskItems(inspectionPlans[0]), doneAt: null, doneBy: null, summary: '',
     },
     {
-      id: 'IN-20261025-002', siteId: site2, planId: 'plan-3', title: '碧山站每日巡检 · 早班', type: 'daily',
+      id: 'IN-20261025-002', siteId: site2, planId: 'plan-3', title: '义乌站每日巡检 · 早班', type: 'daily',
       dueAt: iso(now - 1 * H), assigneeId: 'u-7', status: 'pending', createdAt: iso(now - 8 * H),
       items: taskItems(inspectionPlans[2]), doneAt: null, doneBy: null, summary: '',
     },
@@ -347,7 +347,7 @@ function seedOps(now, assets) {
     ['u-2', 'workorder.assign', 'workorder', 'WO-20261025-001', '将工单指派给赵磊', 16 * M],
     ['u-5', 'workorder.accept', 'workorder', 'WO-20261025-002', '接受工单', 6 * M],
     ['u-3', 'lab.review', 'lab', 'LAB-20261024-002', '复核 BAF 出水化验记录', 20 * H],
-    ['u-1', 'user.create', 'user', 'u-7', '创建碧山站值班账号', 3 * D],
+    ['u-1', 'user.create', 'user', 'u-7', '创建义乌站值班账号', 3 * D],
     ['u-2', 'alarm.rule.update', 'alarmRule', 'rule-1', '硫自养池 pH 告警持续时长由 600 s 调整为 300 s', 2 * D],
     ['u-4', 'command.cancel', 'command', 'CMD-20261024-006', '取消反冲洗命令：排水阀反馈异常', 25 * H],
     ['u-6', 'report.export', 'report', 'daily-20261024', '导出 10 月 24 日运行日报', 18 * H],
@@ -364,7 +364,7 @@ function seedOps(now, assets) {
     ['u-4', 'workorder', '工单已指派：BAF 曝气量核查', 'WO-20261025-002 已指派给陈浩。', false, '/workorders'],
     ['u-3', 'alarm', '告警升级提醒：BAF 溶解氧不足', '已持续 9 分钟，值班已确认到岗。', false, '/alarms'],
     ['u-5', 'workorder', '新工单：BAF 曝气量核查与曝气头检查', '优先级高，要求 4 小时内完成。', true, '/workorders'],
-    ['u-7', 'alarm', '原料罐液位偏低（碧山站）', '当前 24.1%，请安排补水。', true, '/alarms'],
+    ['u-7', 'alarm', '原料罐液位偏低（义乌站）', '当前 24.1%，请安排补水。', true, '/alarms'],
     ['u-1', 'system', '数据备份成功', '数据库快照已生成，保留 7 天。', true, '/admin/backup'],
     ['u-2', 'workorder', '周巡检任务待认领', '10 月第 4 周仪表巡检尚未认领。', false, '/inspections'],
     ['u-6', 'system', '账号权限说明', '只读账号仅可查看授权站点数据，不可下发控制命令。', true, '/help'],

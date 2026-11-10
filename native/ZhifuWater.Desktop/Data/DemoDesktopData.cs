@@ -75,7 +75,7 @@ public sealed partial class DemoDesktopData : IDesktopData
         ["zhao"] = ("赵磊", "operator", "现场运维员", "138-0000-0004", "active"),
         ["chen"] = ("陈浩", "maintainer", "设备维修员", "138-0000-0005", "active"),
         ["guest"] = ("监管访客", "viewer", "监管访客", "138-0000-0006", "active"),
-        ["sun"] = ("孙倩", "operator", "碧山站运维员", "138-0000-0007", "active"),
+        ["sun"] = ("孙倩", "operator", "义乌站运维员", "138-0000-0007", "active"),
         ["zhou"] = ("周涛", "operator", "现场运维员（已停用）", "138-0000-0008", "inactive"),
     };
 
@@ -413,13 +413,13 @@ public sealed partial class DemoDesktopData : IDesktopData
             PointsTotal = total,
             PointsOnline = online,
             LatestAt = latest,
-            Notice = rt.Info.Id == "site-2" ? "碧山站为复制试点，进水流量 / 电能点位未安装，相关指标标「待接入」。" : _notice,
+            Notice = rt.Info.Id == "site-2" ? "义乌站为复制试点，进水流量 / 电能点位未安装，相关指标标「待接入」。" : _notice,
         };
     }
 
     public string Notice() => Rt.Info.Id == "site-2"
-        ? "碧山站为复制试点：选配点位未装，数据按已安装点位统计。"
-        : "鲁家村站运行正常；自养脱氮 pH 与 预氧化溶解氧为当前重点盯防指标。";
+        ? "义乌站为复制试点：选配点位未装，数据按已安装点位统计。"
+        : "中试装置运行正常；自养脱氮 pH 与 预氧化溶解氧为当前重点盯防指标。";
 
     // ---------------- 节拍 ----------------
     public void Tick()

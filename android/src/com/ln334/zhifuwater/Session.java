@@ -27,7 +27,7 @@ public final class Session {
     public static final String MODE_SERVER = "server";
 
     public static final String DEFAULT_SITE_ID = "site-1";
-    public static final String DEFAULT_SITE_NAME = "安吉·鲁家村示范站";
+    public static final String DEFAULT_SITE_NAME = "中试装置 · 100 L/h";
 
     private final SharedPreferences sp;
 

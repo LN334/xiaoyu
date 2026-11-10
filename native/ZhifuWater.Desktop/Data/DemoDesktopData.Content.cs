@@ -419,7 +419,7 @@ public sealed partial class DemoDesktopData
         {
             diagnoses.RemoveAll(d => d.Id == "DG-02");
             diagnoses[0].Phenomenon = "复制试点进水氨氮波动较大，pH 在 6.9–7.2 之间；选配点位未装，部分结论依赖人工化验。";
-            diagnoses[0].Basis += "（碧山站为复制试点，数据完整度较低）";
+            diagnoses[0].Basis += "（义乌站为复制试点，数据完整度较低）";
         }
         rt.Diagnoses = diagnoses;
     }

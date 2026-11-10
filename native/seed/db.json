@@ -9,37 +9,37 @@
   "sites": [
     {
       "id": "site-1",
-      "name": "安吉·鲁家村示范站",
-      "shortName": "鲁家村示范站",
+      "name": "中试装置 · 100 L/h",
+      "shortName": "中试装置",
       "region": "华东 · 浙江",
-      "area": "湖州市安吉县",
-      "address": "浙江省湖州市安吉县递铺街道鲁家村",
-      "lat": 30.6381,
-      "lng": 119.6802,
+      "area": "金华市",
+      "address": "浙江省金华市",
+      "lat": 29.0784,
+      "lng": 119.6474,
       "process": "序批式预氧化 - 固液分离耦合自养深度脱氮",
-      "capacity": "100 L/h（0.1 m³/h）",
-      "deviceRef": "100 L/h 污水处理实验展示装置",
+      "capacity": "100 L/h（中试规模，产品化 10–20 m³/d）",
+      "deviceRef": "100 L/h 一体化中试装置",
       "commissionedAt": "2026-08-18",
       "contact": "王敏  138****6621",
       "status": "online",
-      "note": "一期示范站点，按实际装置图纸完成全量点位适配。"
+      "note": "中试装备，按实际装置图纸完成全量点位适配。"
     },
     {
       "id": "site-2",
-      "name": "黟县·碧山复制试点站",
-      "shortName": "碧山试点站",
-      "region": "华东 · 安徽",
-      "area": "黄山市黟县",
-      "address": "安徽省黄山市黟县碧阳镇碧山村",
-      "lat": 29.9326,
-      "lng": 117.8721,
+      "name": "金华·义乌示范站",
+      "shortName": "义乌示范站",
+      "region": "华东 · 浙江",
+      "area": "金华市 · 义乌",
+      "address": "浙江省金华市 · 义乌市",
+      "lat": 29.3069,
+      "lng": 120.0751,
       "process": "序批式预氧化 - 固液分离耦合自养深度脱氮（复制）",
-      "capacity": "100 L/h（0.1 m³/h）",
+      "capacity": "100 L/h（复制试点）",
       "deviceRef": "100 L/h 装置复制试点",
       "commissionedAt": "2026-09-26",
       "contact": "陈浩  139****3382",
       "status": "online",
-      "note": "按同一工艺模板复制，仪表分批接入；部分选配点位尚未安装。"
+      "note": "12 月工程示范接入（提标改造）。"
     }
   ],
   "units": [
@@ -2448,7 +2448,7 @@
       "username": "sun",
       "name": "孙倩",
       "role": "operator",
-      "title": "运维值班人员 · 碧山",
+      "title": "运维值班人员 · 义乌",
       "phone": "135****2287",
       "siteIds": [
         "site-2"
@@ -2463,7 +2463,7 @@
       "username": "zhou",
       "name": "周涛",
       "role": "maintainer",
-      "title": "现场维修人员 · 碧山",
+      "title": "现场维修人员 · 义乌",
       "phone": "137****5531",
       "siteIds": [
         "site-2"
@@ -2996,7 +2996,7 @@
       "pointCode": "RAW.LVL",
       "unitCode": "raw",
       "level": "minor",
-      "title": "进水调节池液位偏低（碧山站）",
+      "title": "进水调节池液位偏低（义乌站）",
       "detail": "检测值 24.1 %，低于 25 % 提醒值，已转交现场值班处理。",
       "status": "acknowledged",
       "value": 24.1,
@@ -3236,7 +3236,7 @@
     {
       "id": "WO-20261023-005",
       "siteId": "site-2",
-      "title": "碧山站液位计通讯间歇排查",
+      "title": "义乌站液位计通讯间歇排查",
       "type": "repair",
       "priority": "normal",
       "status": "done",
@@ -3388,7 +3388,7 @@
     {
       "id": "plan-3",
       "siteId": "site-2",
-      "name": "碧山站每日巡检",
+      "name": "义乌站每日巡检",
       "cycle": "daily",
       "timeOfDay": "09:00",
       "enabled": true,
@@ -3467,7 +3467,7 @@
       "id": "IN-20261025-002",
       "siteId": "site-2",
       "planId": "plan-3",
-      "title": "碧山站每日巡检 · 早班",
+      "title": "义乌站每日巡检 · 早班",
       "type": "daily",
       "dueAt": "2026-10-26T06:02:50.723Z",
       "assigneeId": "u-7",
@@ -5068,7 +5068,7 @@
       "action": "user.create",
       "targetType": "user",
       "targetId": "u-7",
-      "detail": "创建碧山站值班账号",
+      "detail": "创建义乌站值班账号",
       "ip": "192.168.10.27",
       "result": "success"
     },
@@ -5176,7 +5176,7 @@
       "userId": "u-7",
       "siteId": "site-1",
       "type": "alarm",
-      "title": "进水调节池液位偏低（碧山站）",
+      "title": "进水调节池液位偏低（义乌站）",
       "body": "当前 24.1%，请安排补水。",
       "read": true,
       "link": "/alarms"

@@ -54,19 +54,19 @@ internal static class DemoCatalog
     {
         new()
         {
-            Id = "site-1", Name = "安吉·鲁家村示范站", ShortName = "鲁家村站", Region = "浙江·湖州安吉",
-            Area = "鲁家村", Address = "浙江省湖州市安吉县鲁家村", Process = "序批式预氧化 - 固液分离耦合自养深度脱氮",
-            Capacity = "100 L/h", DeviceRef = "鲁家村站一期", CommissionedAt = "2026-08-18",
+            Id = "site-1", Name = "中试装置 · 100 L/h", ShortName = "中试装置", Region = "浙江·金华",
+            Area = "金华市", Address = "浙江省金华市", Process = "序批式预氧化 - 固液分离耦合自养深度脱氮",
+            Capacity = "100 L/h（中试规模，产品化 10–20 m³/d）", DeviceRef = "100 L/h 一体化中试装置", CommissionedAt = "2026-08-18",
             Contact = "沈工 138-0572-1136", Status = "online",
-            Note = "农业农村生活污水单户/联户型示范装置，出水执行一级 A 标准。",
+            Note = "100 L/h 一体化中试装置，用于工艺验证与平台联调。",
         },
         new()
         {
-            Id = "site-2", Name = "黟县·碧山复制试点站", ShortName = "碧山站", Region = "安徽·黄山黟县",
-            Area = "碧山村", Address = "安徽省黄山市黟县碧山村", Process = "鲁家村站工艺复制版",
-            Capacity = "100 L/h", DeviceRef = "碧山站复制试点", CommissionedAt = "2026-09-26",
+            Id = "site-2", Name = "金华·义乌示范站", ShortName = "义乌站", Region = "浙江·金华义乌",
+            Area = "义乌市", Address = "浙江省金华市义乌市", Process = "中试装置工艺复制版",
+            Capacity = "100 L/h（复制试点）", DeviceRef = "100 L/h 装置复制试点", CommissionedAt = "2026-09-26",
             Contact = "柯工 139-0559-7281", Status = "online",
-            Note = "复制试点，选配点位（进水流量、电能）尚未安装，相关指标标「待接入」。",
+            Note = "复制试点，选配点位（进水流量、电能）尚未安装，相关指标标「待接入」；12 月金华义乌工程示范接入。",
         },
     };
 
@@ -323,7 +323,7 @@ internal static class DemoCatalog
 
     public static List<KeyValuePair<string, string>> Settings(string siteId) => new()
     {
-        new("site.name", "安吉·鲁家村示范站"),
+        new("site.name", "中试装置 · 100 L/h"),
         new("site.mode", "自动运行"),
         new("alarm.push", "开启"),
         new("alarm.quiet", "22:00–07:00 仅紧急"),
