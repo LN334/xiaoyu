@@ -164,7 +164,7 @@ public final class LocalApi {
         JSONObject root = new JSONObject();
         try {
             root.put("ok", true);
-            root.put("data", data);
+            root.put("data", Json.denull(data));
             if (meta != null) root.put("meta", meta);
         } catch (JSONException e) {
             Log.w(TAG, "构造响应失败：" + e.getMessage());
@@ -557,8 +557,6 @@ public final class LocalApi {
         if (!LocalCore.isBlank(resolvedBy) && LocalCore.isBlank(a.optString("resolvedByName"))) {
             a.put("resolvedByName", userName(resolvedBy));
         }
-        if (a.isNull("ackAt")) a.put("ackAt", JSONObject.NULL);
-        if (a.isNull("resolvedAt")) a.put("resolvedAt", JSONObject.NULL);
         return a;
     }
 

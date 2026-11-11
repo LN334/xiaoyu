@@ -322,6 +322,28 @@ $dexHits = @(& $dexdump -d 'build\dex\classes.dex' 2>&1 | Select-String -Pattern
 if ($dexHits.Count -gt 0) { Fail 'classes.dex 中出现网页视图控件引用' }
 Write-Host '    纯原生检查：通过（源码与 dex 均无网页视图控件引用）'
 
+# ---------------------------------------------------------------- 判据回归（静态检查 / UI 检查 / JSON 断言）
+function Invoke-Check([string]$label, [string]$cmdLine, [string]$logName) {
+    $log = "build\$logName"
+    if (Test-Path $log) { Remove-Item $log -Force }
+    & cmd.exe /c "$cmdLine > `"$log`" 2>&1"
+    $code = $LASTEXITCODE
+    if (Test-Path $log) {
+        Get-Content $log -Encoding UTF8 | Select-Object -Last 2 | ForEach-Object { Write-Host "    $_" }
+    }
+    if ($code -ne 0) { Fail "$label 未通过（退出码 $code）" }
+    Write-Host "    $label：通过"
+}
+
+Invoke-Check '静态检查' 'node test\static-check.js' 'static-check.txt'
+Invoke-Check 'UI 检查' 'node test\ui-check.js' 'ui-check.txt'
+
+$harnessDir = 'build\json-harness'
+New-Item -ItemType Directory -Force -Path $harnessDir | Out-Null
+& $javac -encoding UTF-8 -cp 'test\json.jar' -d $harnessDir 'test\JsonHarness.java' 'src\com\ln334\zhifuwater\Json.java' 2>&1 | Out-String | Write-Host
+if ($LASTEXITCODE -ne 0) { Fail 'JSON 断言脚本编译失败' }
+$java = Join-Path $jdkDir 'bin\java.exe'
+Invoke-Check 'JSON null 断言' ('"{0}" -Dfile.encoding=UTF-8 -cp "{1};test\json.jar" com.ln334.zhifuwater.JsonHarness' -f $java, $harnessDir) 'json-harness.txt'
 # ---------------------------------------------------------------- 汇总
 $apkItem = Get-Item 'dist\zhifu-water-mobile.apk'
 $sha = (Get-FileHash 'dist\zhifu-water-mobile.apk' -Algorithm SHA256).Hash

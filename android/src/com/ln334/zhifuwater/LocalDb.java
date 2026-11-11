@@ -28,7 +28,7 @@ public final class LocalDb extends SQLiteOpenHelper {
 
     private static final String TAG = "LocalDb";
     private static final String DB_NAME = "zhifu_local.db";
-    private static final int DB_VERSION = 2;
+    private static final int DB_VERSION = 3;
 
     private static volatile LocalDb instance;
 
@@ -188,7 +188,7 @@ public final class LocalDb extends SQLiteOpenHelper {
             closeQuietly(reader);
             closeQuietly(in);
         }
-        return new JSONObject(sb.toString());
+        return (JSONObject) Json.denull(new JSONObject(sb.toString()));
     }
 
     private static JSONArray dataArray(JSONObject root) {

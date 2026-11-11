@@ -138,7 +138,7 @@ public class OverviewPage extends BasePage {
     }
 
     private String kpiValueText(JSONObject kpi) {
-        String display = kpi.optString("display", "");
+        String display = Json.str(kpi, "display", "");
         if (!TextUtils.isEmpty(display)) return display;
         double v = kpi.optDouble("value", 0);
         String unit = kpi.optString("unit", "");
@@ -201,7 +201,7 @@ public class OverviewPage extends BasePage {
         if ("risk".equals(status)) color = U.DANGER;
         else if ("attention".equals(status)) color = U.WARN;
         else if ("pending".equals(status)) color = U.MUTED;
-        String display = kpi.optString("display", "");
+        String display = Json.str(kpi, "display", "");
         String shownValue = display.length() > 0
                 ? display : U.num(kpi.optDouble("value", 0), kpi.optInt("digits", 2));
         TextView value = U.tv(ctx, shownValue, 23, color, true);

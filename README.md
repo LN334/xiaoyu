@@ -1,4 +1,4 @@
-﻿# 小禹 · 村镇水处理站智能运维平台
+# 小禹 · 村镇水处理站智能运维平台
 
 村镇污水站通常只有一两个人值守：工艺靠经验、异常靠电话、台账靠纸。小禹把这三件事收进一套原生软件——电脑上看全站，手机上接单与巡检，装完即用，不需要服务器。
 
@@ -22,17 +22,17 @@
 
 | 端 | 安装包 | 说明 |
 | --- | --- | --- |
-| Windows 桌面版 | [`Xiaoyu-Setup-2.0.21.exe`](https://github.com/LN334/xiaoyu/releases/download/v2.0.21/Xiaoyu-Setup-2.0.21.exe)（约 49 MB） | C# / WPF 原生程序，自包含 .NET 运行时，安装即用 |
-| 安卓 App | [`zhifu-water-mobile.apk`](https://github.com/LN334/xiaoyu/releases/download/v2.0.21/zhifu-water-mobile.apk)（约 190 KB） | 原生 Android（Java + 框架 API，非 WebView）；不填服务器也能用 |
+| Windows 桌面版 | [`Xiaoyu-Setup-2.0.22.exe`](https://github.com/LN334/xiaoyu/releases/download/v2.0.22/Xiaoyu-Setup-2.0.22.exe)（约 49 MB） | C# / WPF 原生程序，自包含 .NET 运行时，安装即用 |
+| 安卓 App | [`zhifu-water-mobile.apk`](https://github.com/LN334/xiaoyu/releases/download/v2.0.22/zhifu-water-mobile.apk)（约 190 KB） | 原生 Android（Java + 框架 API，非 WebView）；不填服务器也能用 |
 | Web 版 | 本仓库源码 | `node server/index.js`，浏览器打开 `http://127.0.0.1:8765` |
 
 > 桌面端内置自动更新：发布新版本后，已安装的旧版本会在启动时提示升级。
 >
-> 全部版本与 SHA256 见 [Releases · v2.0.21](https://github.com/LN334/xiaoyu/releases/tag/v2.0.21)。仓库不提交二进制产物，也可按「构建」章节自行打包。
+> 全部版本与 SHA256 见 [Releases · v2.0.22](https://github.com/LN334/xiaoyu/releases/tag/v2.0.22)。仓库不提交二进制产物，也可按「构建」章节自行打包。
 
-**版本口径：** 平台发布版本以根目录 `package.json` 为准，服务端 API 和 Web 界面从该版本读取；Windows 桌面端的程序集、安装包版本需与平台发布版本保持一致。Android 与 Windows 使用同一版本号，APK 版本以 `android/AndroidManifest.xml` 为准；当前版本为 **2.0.21（versionCode 17）**。`desktop/` 下的 Electron 包为 v1.x 遗留项目，不属于当前 Windows 桌面版。
+**版本口径：** 平台发布版本以根目录 `package.json` 为准，服务端 API 和 Web 界面从该版本读取；Windows 桌面端的程序集、安装包版本需与平台发布版本保持一致。Android 与 Windows 使用同一版本号，APK 版本以 `android/AndroidManifest.xml` 为准；当前版本为 **2.0.22（versionCode 18）**。`desktop/` 下的 Electron 包为 v1.x 遗留项目，不属于当前 Windows 桌面版。
 
-**发布范围：** Releases 只提供 Windows 桌面版与 Android APK 两个可安装产物；Web 端以源码方式提供，不含托管服务。desktop/ 的 Electron 遗留壳与 _preview/、native/publish* 等构建产物不发布、不入库。当前版本 2.0.21（2026-11-09）。
+**发布范围：** Releases 只提供 Windows 桌面版与 Android APK 两个可安装产物；Web 端以源码方式提供，不含托管服务。desktop/ 的 Electron 遗留壳与 _preview/、native/publish* 等构建产物不发布、不入库。当前版本 2.0.22（2026-11-09）。
 
 各端实际能力、数据持久化位置和同步边界见 [当前架构与端能力](docs/ARCHITECTURE-STATUS.md)。
 
@@ -42,7 +42,7 @@
 
 ### 方式一：Windows 桌面版（推荐）
 
-1. 下载最新已发布的 `Xiaoyu-Setup-2.0.21.exe`，双击安装（可选择安装目录、创建桌面与开始菜单快捷方式）。
+1. 下载最新已发布的 `Xiaoyu-Setup-2.0.22.exe`，双击安装（可选择安装目录、创建桌面与开始菜单快捷方式）。
 2. 从桌面「小禹」启动。原生窗口，不需要浏览器、不需要 Node.js。
 3. 用演示账号登录；首次启动会把内置种子数据复制到 `%LOCALAPPDATA%\ZhifuWater\data\db.json`，之后的数据读写都在本机。
 
@@ -50,10 +50,12 @@
 
 ### 方式二：安卓 App（原生、可离线）
 
-1. 下载最新已发布的 `zhifu-water-mobile.apk`（Android 2.0.21），在手机上允许「安装未知来源应用」后安装。
+1. 下载最新已发布的 `zhifu-water-mobile.apk`（Android 2.0.22），在手机上允许「安装未知来源应用」后安装。
 2. 打开 App，点「**直接进入（本机演示）**」——不需要电脑、不需要填服务器地址。
    数据存在手机本地 SQLite；本机引擎在后台每 5 秒推进 site-1 的模拟遥测与告警（界面随之静默刷新）。告警确认、工单流转和巡检提交会持久化在手机上，重启 App 后仍保留。离线演示与电脑端数据彼此独立，也不会连接现场 PLC。
 3. 如果想看电脑上的平台数据：先在电脑上用 `node server/index.js --host 0.0.0.0` 启动服务，再在登录页展开「连接服务器」，填 `http://电脑IP:8765`，用同一套账号登录。服务默认只监听本机地址，局域网连接时需显式开启监听。
+
+> 已装旧版的直接覆盖安装即可。本机 SQLite 演示库会随版本升级自动重建（旧演示数据不保留）；连服务器的模式不受影响。
 
 > App 是**完全原生**的 Java 实现（Activity + 框架 View + SQLite，无 WebView、无 Gradle、无 androidx、无第三方库）。本机模式下数据仅存在手机上，与电脑端互不影响。设备控制与参数修改只留在桌面端：它们需要联锁校验与二次确认，手机屏幕不适合承载。
 
@@ -67,7 +69,7 @@ node server/index.js
 
 服务器默认只允许本机访问。需要让同一局域网的手机连接时，使用 `node server/index.js --host 0.0.0.0`，并在受控网络中运行。
 
-Web 端与桌面端同为 2.0.21：品牌、浅色水务蓝界面、数据模型一致。
+Web 端与桌面端同为 2.0.22：品牌、浅色水务蓝界面、数据模型一致。
 
 ### 演示账号
 
@@ -217,7 +219,7 @@ native\publish\Xiaoyu.exe --smoke
 # 安装包（NSIS）：需 makensis；本机未装 NSIS 时，可解压官方 nsis-3.04.zip 便携版，
 # 直接调用其中的 makensis.exe。注意在 Git Bash 里用 -V2 而不是 /V2（斜杠会被 MSYS 当路径转换）
 & "C:\path\to\nsis-3.04\makensis.exe" -V2 native\installer\setup.nsi
-# 产物：native/installer/Xiaoyu-Setup-2.0.21.exe
+# 产物：native/installer/Xiaoyu-Setup-2.0.22.exe
 ```
 
 ### 安卓端（需 JDK 17 + Android SDK build-tools/platform 34）
