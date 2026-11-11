@@ -239,7 +239,9 @@ public class OverviewPage extends BasePage {
         TextView t = U.tv(ctx, text, 11, U.INK2, false);
         t.setSingleLine(true);
         t.setEllipsize(TextUtils.TruncateAt.END);
-        row.addView(t, U.lpWith(ctx, 0, U.WRAP, 8, 0, 0, 0));
+        LinearLayout.LayoutParams healthTextLp = U.lpWith(ctx, 0, U.WRAP, 8, 0, 0, 0);
+        healthTextLp.weight = 1f;
+        row.addView(t, healthTextLp);
         card.addView(row);
         addCard(card);
     }
@@ -287,7 +289,9 @@ public class OverviewPage extends BasePage {
         TextView name = U.tv(ctx, unit.optString("name", "-"), 12.5f, U.INK, true);
         name.setSingleLine(true);
         name.setEllipsize(TextUtils.TruncateAt.END);
-        head.addView(name, U.lpWith(ctx, 0, U.WRAP, 6, 0, 0, 0));
+        LinearLayout.LayoutParams unitNameLp = U.lpWith(ctx, 0, U.WRAP, 6, 0, 0, 0);
+        unitNameLp.weight = 1f;
+        head.addView(name, unitNameLp);
         card.addView(head);
 
         TextView chip = U.chip(ctx, U.processStatusName(status), U.statusFg(status), U.statusBg(status));

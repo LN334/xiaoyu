@@ -337,6 +337,7 @@ function Invoke-Check([string]$label, [string]$cmdLine, [string]$logName) {
 
 Invoke-Check '静态检查' 'node test\static-check.js' 'static-check.txt'
 Invoke-Check 'UI 检查' 'node test\ui-check.js' 'ui-check.txt'
+Invoke-Check '布局检查' 'node test\layout-check.js' 'layout-check.txt'
 
 $harnessDir = 'build\json-harness'
 New-Item -ItemType Directory -Force -Path $harnessDir | Out-Null

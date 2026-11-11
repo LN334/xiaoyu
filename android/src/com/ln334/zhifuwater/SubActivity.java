@@ -51,7 +51,7 @@ public class SubActivity extends Activity {
         LinearLayout body = U.linear(this, LinearLayout.VERTICAL);
         U.pad(body, this, 14, 12, 14, 28);
         scroll.addView(body, new ScrollView.LayoutParams(U.MATCH, U.WRAP));
-        root.addView(scroll, U.lp(0, 0, 1f));
+        root.addView(scroll, U.lp(U.MATCH, 0, 1f));
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(U.MATCH, U.MATCH);
         root.setLayoutParams(params);
@@ -75,7 +75,9 @@ public class SubActivity extends Activity {
             }
         });
         bar.addView(back, U.lp(U.dp(this, 36), U.dp(this, 36)));
-        bar.addView(U.tv(this, title, 17, U.INK, true), U.lpWith(this, 0, U.WRAP, 6, 0, 0, 0));
+        LinearLayout.LayoutParams titleLp = U.lpWith(this, 0, U.WRAP, 6, 0, 0, 0);
+        titleLp.weight = 1f;
+        bar.addView(U.tv(this, title, 17, U.INK, true), titleLp);
 
         View line = new View(this);
         line.setBackgroundColor(U.LINE);

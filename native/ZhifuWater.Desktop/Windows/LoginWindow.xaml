@@ -112,7 +112,7 @@
                         Style="{DynamicResource PrimaryButton}" Foreground="#FFFFFFFF" Background="#FF0E7C74" IsDefault="True" Click="OnLoginClick" />
             </StackPanel>
 
-            <TextBlock x:Name="VersionText" Text="v2.0.22" FontSize="11" Foreground="{DynamicResource Muted2}"
+            <TextBlock x:Name="VersionText" Text="v2.0.23" FontSize="11" Foreground="{DynamicResource Muted2}"
                        HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,16" />
         </Grid>
         <Button Style="{DynamicResource CaptionCloseButton}" HorizontalAlignment="Right" VerticalAlignment="Top"

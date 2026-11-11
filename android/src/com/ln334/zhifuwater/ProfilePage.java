@@ -213,9 +213,11 @@ public class ProfilePage extends BasePage {
         top.addView(U.dot(ctx, current ? U.BRAND : U.LINE_STRONG, 8));
         TextView nameView = U.tv(ctx, name, 13.5f, U.INK, true);
         nameView.setSingleLine(true);
-        top.addView(nameView, U.lpWith(ctx, 0, U.WRAP, 7, 0, 0, 0));
-        top.addView(new View(ctx), U.lp(0, 1, 1f));
-        if (current) top.addView(U.chip(ctx, "当前站点", U.BRAND, R.drawable.bg_chip_brand));
+        LinearLayout.LayoutParams nameViewLp = U.lpWith(ctx, 0, U.WRAP, 7, 0, 0, 0);
+        nameViewLp.weight = 1f;
+        top.addView(nameView, nameViewLp);
+        if (current) top.addView(U.chip(ctx, "当前站点", U.BRAND, R.drawable.bg_chip_brand),
+                U.lpWith(ctx, U.WRAP, U.WRAP, 6, 0, 0, 0));
         card.addView(top);
 
         JSONObject counts = site.optJSONObject("counts");

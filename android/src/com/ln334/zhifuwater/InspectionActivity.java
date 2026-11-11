@@ -274,7 +274,9 @@ public class InspectionActivity extends Activity {
         head.addView(no, U.lp(U.dp(this, 24), U.dp(this, 24)));
         TextView label = U.tv(this, item.optString("label", "巡检项"), 13.5f, U.INK, true);
         label.setLineSpacing(U.dp(this, 1.5f), 1f);
-        head.addView(label, U.lpWith(this, 0, U.WRAP, 8, 0, 0, 0));
+        LinearLayout.LayoutParams labelLp = U.lpWith(this, 0, U.WRAP, 8, 0, 0, 0);
+        labelLp.weight = 1f;
+        head.addView(label, labelLp);
         card.addView(head);
 
         String standard = item.optString("standard", "");

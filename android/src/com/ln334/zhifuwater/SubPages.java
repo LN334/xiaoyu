@@ -354,7 +354,9 @@ final class SubPages {
         bar.addView(filled, U.lp(0, U.MATCH, Math.max(0.02f, health / 100f)));
         View rest = new View(ctx);
         bar.addView(rest, U.lp(0, U.MATCH, Math.max(0.02f, 1f - health / 100f)));
-        healthRow.addView(bar, U.lpWith(ctx, 0, U.dp(ctx, 6), 10, 0, 10, 0));
+        LinearLayout.LayoutParams barLp = U.lpWith(ctx, 0, U.dp(ctx, 6), 10, 0, 10, 0);
+        barLp.weight = 1f;
+        healthRow.addView(bar, barLp);
         healthRow.addView(U.tv(ctx, health + " 分", 11.5f, U.INK2, true));
         card.addView(healthRow, U.lpWith(ctx, U.MATCH, U.WRAP, 0, 10, 0, 0));
 
