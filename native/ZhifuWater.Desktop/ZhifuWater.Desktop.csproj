@@ -9,7 +9,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <AssemblyName>Xiaoyu</AssemblyName>
     <RootNamespace>ZhifuWater.Desktop</RootNamespace>
-    <ApplicationIcon>..\..\desktop\build\icon.ico</ApplicationIcon>
+    <ApplicationIcon>..\installer\branding\icon.ico</ApplicationIcon>
     <Version>0.0.1</Version>
     <Company>LN334</Company>
     <Product>小禹 · 村镇水处理站智能运维平台</Product>

@@ -21,8 +21,8 @@ SetCompressor /SOLID lzma
 BrandingText "${APP_NAME} ${APP_VERSION}"
 
 ; ---- 外观 ----
-!define MUI_ICON "..\..\desktop\build\icon.ico"
-!define MUI_UNICON "..\..\desktop\build\icon.ico"
+!define MUI_ICON "branding\icon.ico"
+!define MUI_UNICON "branding\icon.ico"
 !define MUI_ABORTWARNING
 !define MUI_HEADERIMAGE
 !define MUI_HEADERIMAGE_BITMAP "branding\header.bmp"

@@ -9,7 +9,6 @@
 | 平台发布版（Web / 服务端） | 0.0.1 | 根目录 `package.json`；服务端运行时读取 |
 | Windows 桌面端 | 0.0.1 | .NET 项目与 NSIS 安装脚本，需随平台发布版同步 |
 | Android | 0.0.1（versionCode 20） | `android/AndroidManifest.xml`；构建和界面读取 Manifest / APK 元数据 |
-| Electron 遗留壳 | 1.0.8 | `desktop/package.json`；v2 Windows 桌面版已由 WPF 取代 |
 
 ## 各端能力与数据
 

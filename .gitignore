@@ -18,13 +18,6 @@ android/keystore/
 _smoke-result.json
 _smoke-log.txt
 *.tmp
-desktop/build/icon_[0-9]*.png
-desktop/build/icon_square_*.png
-desktop/build/*.png.tmp
-desktop/build/*.log
-desktop/build/*.txt
-desktop/build/exe_icon_32.png
-desktop/build/apk_icon_check.png
 
 # 一次性预览工程与截图（历史工具，不入库）
 _trayprev/
@@ -39,7 +32,6 @@ _tray-preview*.png
 Thumbs.db
 desktop.ini
 
-desktop/scripts/app/
 
 android/build_log.txt
 android/test/out/

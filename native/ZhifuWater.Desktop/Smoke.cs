@@ -13,7 +13,7 @@ using ZhifuWater.Desktop.Windows;
 
 namespace ZhifuWater.Desktop;
 
-/// <summary>启动自检：--smoke 时构造登录窗与主窗、遍历 14 个页面，打印 DESKTOP-SMOKE OK 后退出。</summary>
+/// <summary>启动自检：--smoke 时构造登录窗与主窗、遍历全部页面，打印 DESKTOP-SMOKE OK 后退出。</summary>
 public static class Smoke
 {
     public static int Run(AppServices services, bool shots = false)
@@ -42,7 +42,7 @@ public static class Smoke
             if (shots) { services.Data.Tick(); services.Data.Tick(); }
             mainMs = sw.ElapsedMilliseconds;
             if (mainMs > 3000) throw new TimeoutException("主窗构造耗时 " + mainMs + " ms，超过 3 秒阈值");
-            SmokeConsole.WriteLine($"  [2/3] 主窗构造 OK ({mainMs} ms) · 导航 15 项 · 默认 {main.Width}×{main.Height}");
+            SmokeConsole.WriteLine($"  [2/3] 主窗构造 OK ({mainMs} ms) · 导航 {MainWindow.NavCount} 项 · 默认 {main.Width}×{main.Height}");
             if (shots && main.Content is FrameworkElement mc)
             {
                 var mw = int.TryParse(Environment.GetEnvironmentVariable("SHOT_W"), out var shotW) ? shotW : 1440;

@@ -22,6 +22,7 @@ public abstract class PageBase : UserControl
     public abstract string Title { get; }
     public abstract string Group { get; }
     protected virtual string SourceLabel => "CoreServices 业务层";
+    protected virtual string ScopeLabel => $"站点：{Svc.Data.Site.Name}（{Svc.Data.Site.Id}）";
 
     protected PageBase(AppServices services, MainWindow host)
     {
@@ -60,7 +61,7 @@ public abstract class PageBase : UserControl
     protected void UpdateFootnote()
     {
         if (_footnote == null) return;
-        _footnote.Text = $"数据来源：{Svc.BackendName} · {SourceLabel} · 站点：{Svc.Data.Site.Name}（{Svc.Data.Site.Id}） · " +
+        _footnote.Text = $"数据来源：{Svc.BackendName} · {SourceLabel} · {ScopeLabel} · " +
                          $"最后更新：{Svc.Data.LastUpdated:yyyy-MM-dd HH:mm:ss} · 每 3 秒自动刷新";
     }
 

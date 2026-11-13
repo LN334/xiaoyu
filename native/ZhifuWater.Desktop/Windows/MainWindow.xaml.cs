@@ -20,20 +20,21 @@ public partial class MainWindow : Window
 {
     private static readonly (string Group, string Id, string Title)[] NavItems =
     {
-        ("总览", "dashboard", "运行总览"),
-        ("总览", "process", "工艺流程"),
-        ("总览", "monitor", "实时数据"),
-        ("运行", "alarms", "告警管理"),
-        ("运行", "automation", "自动控制"),
-        ("运行", "control", "设备控制"),
-        ("运行", "params", "参数设置"),
-        ("水质与分析", "quality", "水质化验"),
-        ("水质与分析", "diagnosis", "运行诊断"),
-        ("水质与分析", "analysis", "运行分析"),
-        ("水质与分析", "reports", "报表中心"),
+        ("监管", "fleet", "多站总览"),
+        ("站点", "dashboard", "站点驾驶舱"),
+        ("站点", "monitor", "实时数据"),
+        ("站点", "process", "工艺流程图"),
+        ("监管", "alarms", "告警管理"),
         ("运维", "workorders", "工单管理"),
         ("运维", "inspections", "巡检管理"),
         ("运维", "devices", "设备台账"),
+        ("运维", "reports", "报表中心"),
+        ("教育与分析", "quality", "水质化验"),
+        ("教育与分析", "diagnosis", "运行诊断"),
+        ("教育与分析", "analysis", "运行分析"),
+        ("仿真实验", "automation", "控制规则实验"),
+        ("仿真实验", "control", "设备控制实验"),
+        ("仿真实验", "params", "参数实验"),
         ("系统", "admin", "系统管理")
     };
 
@@ -45,8 +46,12 @@ public partial class MainWindow : Window
     private readonly Dictionary<string, (Border Box, TextBlock Text)> _navBadges = new();
     private readonly Dictionary<string, System.Windows.Shapes.Path> _navIcons = new();
 
+    /// <summary>左侧导航条目数，供自检与文档口径引用。</summary>
+    public static int NavCount => NavItems.Length;
+
     private static readonly Dictionary<string, string> NavIconData = new()
     {
+        ["fleet"] = "M2,3 H7 V7 H2 Z M9,3 H14 V7 H9 Z M2,9 H7 V13 H2 Z M9,9 H14 V13 H9 Z",
         ["dashboard"] = "M2,2 H7 V7 H2 Z M9,2 H14 V7 H9 Z M2,9 H7 V14 H2 Z M9,9 H14 V14 H9 Z",
         ["process"] = "M2,8 H5 M5,4 H10 V12 H14 M5,12 H10",
         ["monitor"] = "M2,10 H5 L7,4 L10,12 L12,8 H14",
@@ -116,7 +121,7 @@ public partial class MainWindow : Window
         UpdateBadges();
         UpdateFooter();
         var startPage = Environment.GetEnvironmentVariable("ZHIFU_START_PAGE");
-        ShowPage(string.IsNullOrWhiteSpace(startPage) ? "dashboard" : startPage);
+        ShowPage(string.IsNullOrWhiteSpace(startPage) ? "fleet" : startPage);
         SidebarVersion.Text = "v" + UpdateService.CurrentVersionText;
         CheckUpdateMenu.Content = "检查更新（v" + UpdateService.CurrentVersionText + "）";
         Closed += OnClosed;
@@ -237,6 +242,14 @@ public partial class MainWindow : Window
         _pages.Clear();
         ShowPage(_currentId);
         Toast("已切换到 " + site.Name + "（" + site.Id + "）");
+    }
+
+    public void ShowSiteDashboard(string siteId)
+    {
+        var site = _services.Sites.FirstOrDefault(s => s.Id == siteId);
+        if (site is null) return;
+        SiteCombo.SelectedItem = site;
+        if (_services.Data.CurrentSiteId == siteId) ShowPage("dashboard");
     }
 
     /// <summary>页面区当前可视高度，供内容较少的页面把主卡撑到底。</summary>

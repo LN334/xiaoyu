@@ -8,6 +8,7 @@ public static class PageFactory
 {
     public static PageBase Create(string id, AppServices services, MainWindow host) => id switch
     {
+        "fleet" => new FleetOverviewPage(services, host),
         "dashboard" => new DashboardPage(services, host),
         "process" => new ProcessPage(services, host),
         "monitor" => new MonitorPage(services, host),

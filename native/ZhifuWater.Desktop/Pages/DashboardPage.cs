@@ -28,7 +28,7 @@ public sealed class DashboardPage : PageBase
     private TextBlock _workSummary = null!;
 
     public override string Id => "dashboard";
-    public override string Title => "运行总览";
+    public override string Title => "站点驾驶舱";
     public override string Group => "总览";
 
     public DashboardPage(AppServices services, ZhifuWater.Desktop.Windows.MainWindow host) : base(services, host) { }

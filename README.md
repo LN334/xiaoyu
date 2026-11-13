@@ -32,7 +32,7 @@
 
 **版本口径：** 平台发布版本以根目录 `package.json` 为准，服务端 API 和 Web 界面从该版本读取；Windows 桌面端的程序集、安装包版本需与平台发布版本保持一致。Android 与 Windows 使用同一版本号，APK 版本以 `android/AndroidManifest.xml` 为准；当前版本为 **0.0.1（versionCode 20）**。`desktop/` 下的 Electron 包为 v1.x 遗留项目，不属于当前 Windows 桌面版。
 
-**发布范围：** Releases 只提供 Windows 桌面版与 Android APK 两个可安装产物；Web 端以源码方式提供，不含托管服务。desktop/ 的 Electron 遗留壳与 _preview/、native/publish* 等构建产物不发布、不入库。当前版本 0.0.1（2026-11-11）。
+**发布范围：** Releases 只提供 Windows 桌面版与 Android APK 两个可安装产物；Web 端以源码方式提供，不含托管服务。_preview/、native/publish* 等构建产物不发布、不入库。当前版本 0.0.1（2026-11-11）。
 
 各端实际能力、数据持久化位置和同步边界见 [当前架构与端能力](docs/ARCHITECTURE-STATUS.md)。
 
@@ -92,13 +92,13 @@ Web 端与桌面端同为 0.0.1：品牌、浅色水务蓝界面、数据模型�
 
 | 方案章节 | 平台落地 |
 | --- | --- |
-| 运行总览 | 站点概况、8 项 KPI（水量 / 进出水 COD / 运行设备 / 点位在线率 / 未关闭告警 / 待处理工单 / 吨水电耗 / 吨水药耗）、11 单元工艺链、24h 趋势、未关闭告警、待办工单、诊断摘要、数据健康 |
+| 站点驾驶舱 | 站点概况、8 项 KPI（水量 / 进出水 COD / 运行设备 / 点位在线率 / 未关闭告警 / 待处理工单 / 吨水电耗 / 吨水药耗）、11 单元工艺链、24h 趋势、未关闭告警、待办工单、诊断摘要、数据健康 |
 | 站点/设备/点位管理 | 2 站点、24 台设备台账（运行/停机/故障/未安装、运行小时、保养周期）、33 个点位（含图纸实测点与选配点标记） |
 | 实时数据与动态工艺图 | 数据每 5 秒推进、界面 3 秒刷新一次；实时值带单位与来源、超时标灰；工艺图显示单元状态、泵/风机/反冲洗状态与联锁 |
 | 水质化验 | 在线 pH/DO/液位/流量与**人工化验**双来源分离；化验录入、复核（通过/驳回）、QC 标记、去除率与达标判定（参考 GB 18918 一级 A） |
-| 参数设置 | 12 个参数、三类写入模式（云端直接 / 审批 / 现场设定）、版本历史与回滚、审批（禁止自审） |
-| 设备控制中心 | 11 个动作、命令状态机（待确认→待下发→已下发→执行中→成功/失败/超时/取消）、PLC 联锁校验、执行理由、回执与审计 |
-| 自动控制 | 8 条内置规则：压差高自动反冲洗、溶解氧低自动加曝气、低液位保护停泵、来水恢复自动启泵、药箱低液位停加药、紧急告警自动派发抢修工单；带持续判定、冷却时间与当日次数上限，每次执行写命令记录与审计 |
+| 参数实验 | 12 个参数、三类写入模式（云端直接 / 审批 / 现场设定）、版本历史与回滚、审批（禁止自审） |
+| 设备控制实验 | 11 个动作、命令状态机（待确认→待下发→已下发→执行中→成功/失败/超时/取消）、PLC 联锁校验、执行理由、回执与审计 |
+| 控制规则实验 | 8 条内置规则：压差高自动反冲洗、溶解氧低自动加曝气、低液位保护停泵、来水恢复自动启泵、药箱低液位停加药、紧急告警自动派发抢修工单；带持续判定、冷却时间与当日次数上限，每次执行写命令记录与审计 |
 | 智能告警管理 | 15 条规则（阈值+持续时长+迟滞+升级+联锁条件）、四级告警、确认/恢复/关闭、MTTA/MTTR 统计 |
 | 运行诊断 | 现象—可能原因—检查项—边界—依据（点位/趋势/规则/数据时间）—建议，7 类诊断模型 |
 | 运行分析 | 水量、能耗、药耗、成本、去除率、单元效率、设备健康、告警统计（7/30 天） |
@@ -177,7 +177,7 @@ zhifu-water-platform/
 ├── native/                   桌面端（C# / .NET 8）
 │   ├── ZhifuWater.Core/      业务层：存储、登录、遥测、模拟引擎、告警、命令、工单、报表
 │   ├── ZhifuWater.Core.Tests/ 业务层自测（174 断言）
-│   ├── ZhifuWater.Desktop/   WPF 界面：14 个页面
+│   ├── ZhifuWater.Desktop/   WPF 界面：16 个页面
 │   ├── installer/setup.nsi   桌面安装包脚本
 │   └── seed/db.json          首次启动的种子数据
 ├── android/                  安卓端（Java，手工打包，无 Gradle）
@@ -186,7 +186,6 @@ zhifu-water-platform/
 │   └── build.ps1             aapt2 → javac → d8 → zipalign → apksigner
 ├── server/                   Web 版 Node 服务（可选）
 ├── web/                      Web 版前端（可选）
-├── desktop/                  旧 Electron 桌面版（v1.x 遗留，v2 不再发布）
 ├── scripts/                  Web 版冒烟测试、接口快照、离线预览
 ├── docs/screenshots/         截图（native/ 为 v2 原生桌面）
 └── data/db.json              Web 版运行数据（首次启动自动生成）
@@ -212,7 +211,7 @@ npm test             # 只跑 Web 服务端测试（node:test，零依赖）
 dotnet publish native\ZhifuWater.Desktop\ZhifuWater.Desktop.csproj -c Release -r win-x64 `
   --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o native\publish
 
-# 自检（打印 DESKTOP-SMOKE OK pages=15 即通过）
+# 自检（打印 DESKTOP-SMOKE OK pages=16 即通过）
 native\publish\Xiaoyu.exe --smoke
 
 # 安装包（NSIS）
@@ -263,7 +262,7 @@ node scripts/smoke.js        # 78 项接口冒烟
 | | |
 | --- | --- |
 | ![运行总览](docs/screenshots/native/page-dashboard.png) | ![工艺流程](docs/screenshots/native/page-process.png) |
-| 运行总览 | 工艺流程（11 单元工艺图） |
+| 站点驾驶舱 | 工艺流程（11 单元工艺图） |
 | ![告警管理](docs/screenshots/native/page-alarms.png) | ![设备控制](docs/screenshots/native/page-control.png) |
 | 告警管理 | 设备控制（命令状态机） |
 | ![工单管理](docs/screenshots/native/page-workorders.png) | ![设备台账](docs/screenshots/native/page-devices.png) |

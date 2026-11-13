@@ -84,7 +84,7 @@ node --test server/test/*.test.mjs   # 也可以直接指定文件
 `Xiaoyu.exe` 内置两个参数，不需要额外工具：
 
 ```bash
-native/publish/Xiaoyu.exe --smoke   # 构造全部页面 + 登录 + 命令链，打印 DESKTOP-SMOKE OK pages=15
+native/publish/Xiaoyu.exe --smoke   # 构造全部页面 + 登录 + 命令链，打印 DESKTOP-SMOKE OK pages=16
 native/publish/Xiaoyu.exe --shots   # 逐页截图，输出目录 %TEMP%/zhifu-desktop-shots
 ```
 
