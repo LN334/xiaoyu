@@ -7,7 +7,7 @@ const { el, fmt } = ui;
 const MODE_META = {
   cloud: { label: '云端直接写入', kind: 'info', note: '提交后立即生效，生成新版本并记录操作人、理由与时间。' },
   approval: { label: '审批后生效', kind: 'warn', note: '提交后生成变更申请并通知工艺/区域负责人，审批通过后才写入。' },
-  local: { label: '现场设定', kind: 'muted', note: '该参数仅允许现场在触摸屏设定，平台不提供远程写入。' },
+  local: { label: '现场设定', kind: 'muted', note: '该参数仅允许现场就地设定，平台不提供远程写入。' },
   read: { label: '只读', kind: 'muted', note: '该参数由系统维护，平台内不可修改。' },
 };
 
@@ -285,7 +285,7 @@ export async function render(root, ctx) {
       return el('button', { class: 'btn ghost sm', type: 'button', disabled: true, title: '当前角色无参数编辑权限' }, '编辑');
     }
     if (p.writeMode === 'local') {
-      return el('button', { class: 'btn ghost sm', type: 'button', disabled: true, title: '须现场在触摸屏设定' }, '现场设定');
+      return el('button', { class: 'btn ghost sm', type: 'button', disabled: true, title: '须现场就地设定' }, '现场设定');
     }
     if (p.writeMode === 'read') {
       return el('button', { class: 'btn ghost sm', type: 'button', disabled: true, title: '该参数为只读' }, '只读');

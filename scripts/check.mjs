@@ -33,7 +33,6 @@ const steps = [
 if (!skipBuild) {
   steps.push(
     { name: 'build:desktop', cmd: 'dotnet', argv: ['build', 'native/ZhifuWater.Desktop/ZhifuWater.Desktop.csproj', '-c', 'Release', '--nologo', '-v', 'q'] },
-    { name: 'build:kiosk', cmd: 'dotnet', argv: ['build', 'native/ZhifuWater.Kiosk/ZhifuWater.Kiosk.csproj', '-c', 'Release', '--nologo', '-v', 'q'] },
   )
 }
 steps.push({ name: 'test', cmd: process.execPath, argv: ['--test', 'server/test/*.test.mjs'] })

@@ -1909,7 +1909,7 @@ public sealed class CoreDesktopData : IDesktopData
         catch (CoreException ex) { return OpResult.Fail(ex.Message); }
     }
 
-    /* ================= 通知 / 触摸屏 ================= */
+    /* ================= 通知 ================= */
 
     private JsonObject _notifications = new();
     private long _notificationsAt;
@@ -2044,22 +2044,6 @@ public sealed class CoreDesktopData : IDesktopData
         }
         catch (CoreException ex) { return OpResult.Fail(ex.Message); }
     }
-
-    public KioskData Kiosk()
-    {
-        var k = new KioskData();
-        if (_user is null) return k;
-        var kpis = DashboardKpis();
-        k.StatusCards = kpis.Take(5).ToList();
-        k.Units = UnitSnapshots().ToList();
-        k.RecentAlarms = Alarms("open").Take(5).ToList();
-        var actions = Actions;
-        k.QuickActions = actions.Where(a => a.Key.Contains("backwash", StringComparison.OrdinalIgnoreCase))
-            .Concat(actions.Where(a => !a.Key.Contains("backwash", StringComparison.OrdinalIgnoreCase)))
-            .Take(4).ToList();
-        return k;
-    }
-
     /* ================= 站点 / 工具 ================= */
 
     private static List<SiteInfo> MapSites(JsonArray arr) => J.Objs(arr).Select(s => new SiteInfo

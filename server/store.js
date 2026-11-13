@@ -1,7 +1,7 @@
 'use strict';
 /**
  * JSON 文件存储。面向演示环境：单进程、原子写、定时落盘。
- * 结构：data/db.json 保存业务实体；遥测历史保存在内存（重启后按种子重建）。
+ * 结构：data/db.json 保存业务实体；演示遥测历史在内存中重建，现场网关历史由 Telemetry 单独写入 JSONL。
  */
 const fs = require('fs');
 const path = require('path');

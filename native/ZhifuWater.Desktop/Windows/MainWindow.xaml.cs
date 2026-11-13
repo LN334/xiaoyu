@@ -70,7 +70,6 @@ public partial class MainWindow : Window
     private string _currentId = "dashboard";
     private bool _loadingSites;
     private bool _loggingOut;
-    private KioskWindow? _kiosk;
     private UpdateInfo? _pendingUpdate;
     private bool _updateChecking;
 
@@ -205,8 +204,7 @@ public partial class MainWindow : Window
             };
             button.Click += (_, _) =>
             {
-                if (id == "kiosk") OpenKiosk();
-                else ShowPage(id);
+                ShowPage(id);
             };
             NavPanel.Children.Add(button);
             _navButtons[id] = button;
@@ -271,19 +269,6 @@ public partial class MainWindow : Window
         PageTitle.Text = nav.Title ?? id;
         UpdateFooter();
     }
-
-    public void OpenKiosk()
-    {
-        if (_kiosk != null)
-        {
-            _kiosk.Activate();
-            return;
-        }
-        _kiosk = new KioskWindow(_services);
-        _kiosk.Closed += (_, _) => _kiosk = null;
-        _kiosk.Show();
-    }
-
     public void RefreshShell()
     {
         UpdateBadges();
@@ -813,7 +798,7 @@ public partial class MainWindow : Window
     internal int SmokeExercisePages(string? shotDir = null)
     {
         var count = 0;
-        foreach (var nav in NavItems.Where(n => n.Id != "kiosk"))
+        foreach (var nav in NavItems)
         {
             var page = PageFactory.Create(nav.Id, _services, this);
             PageHost.Content = page;
@@ -825,17 +810,6 @@ public partial class MainWindow : Window
                 Smoke.CaptureElement(page, 1228, 860, Path.Combine(shotDir, "page-" + nav.Id + ".png"));
             count++;
         }
-        var kiosk = new KioskWindow(_services);
-        kiosk.Measure(new Size(1920, 1080));
-        kiosk.Arrange(new Rect(0, 0, 1920, 1080));
-        kiosk.UpdateLayout();
-        if (shotDir != null && kiosk.Content is FrameworkElement kc)
-        {
-            kiosk.Content = null; // 脱离 Window 后独立布局，才能可靠截图
-            Smoke.CaptureElement(kc, 1920, 1080, Path.Combine(shotDir, "kiosk.png"));
-        }
-        kiosk.Close();
-        count++;
         ShowPage("dashboard");
         return count;
     }

@@ -116,7 +116,7 @@ try { __req('app.js'); } catch (e) { console.error(e); document.body.insertAdjac
 
 /* ---------------- CSS 内联 ---------------- */
 
-const cssFiles = ['app.css', 'pages-dash.css', 'pages-control.css', 'pages-data.css', 'pages-ops.css', 'pages-kiosk.css', 'theme.css'];
+const cssFiles = ['app.css', 'pages-dash.css', 'pages-control.css', 'pages-data.css', 'pages-ops.css', 'theme.css'];
 let css = '';
 for (const f of cssFiles) {
   const p = path.join(WEB, 'css', f);
@@ -298,7 +298,7 @@ setTimeout(function () {
 fs.mkdirSync(path.join(OUT, 'pages'), { recursive: true });
 const routes = [
   'dashboard', 'process', 'monitor', 'alarms', 'control', 'params', 'quality',
-  'diagnosis', 'analysis', 'reports', 'workorders', 'inspections', 'devices', 'admin', 'mobile', 'kiosk',
+  'diagnosis', 'analysis', 'reports', 'workorders', 'inspections', 'devices', 'admin', 'mobile',
 ];
 let n = 0;
 for (const id of routes) {

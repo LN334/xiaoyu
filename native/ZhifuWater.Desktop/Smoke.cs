@@ -13,7 +13,7 @@ using ZhifuWater.Desktop.Windows;
 
 namespace ZhifuWater.Desktop;
 
-/// <summary>启动自检：--smoke 时构造登录窗与主窗、遍历 14 个页面、构造触摸屏窗口，打印 DESKTOP-SMOKE OK 后退出。</summary>
+/// <summary>启动自检：--smoke 时构造登录窗与主窗、遍历 14 个页面，打印 DESKTOP-SMOKE OK 后退出。</summary>
 public static class Smoke
 {
     public static int Run(AppServices services, bool shots = false)
@@ -30,7 +30,7 @@ public static class Smoke
             var login = new LoginWindow(services);
             if (shots && login.Content is FrameworkElement lc)
                 CaptureElement(lc, 1080, 720, Path.Combine(shotDir, "login.png"));
-            SmokeConsole.WriteLine($"  [1/4] 登录窗构造 OK · 账号 {login.Account}");
+            SmokeConsole.WriteLine($"  [1/3] 登录窗构造 OK · 账号 {login.Account}");
 
             var loginResult = services.Data.Login("admin", "water123");
             if (!loginResult.Ok) throw new InvalidOperationException("演示账号登录失败：" + loginResult.Message);
@@ -42,7 +42,7 @@ public static class Smoke
             if (shots) { services.Data.Tick(); services.Data.Tick(); }
             mainMs = sw.ElapsedMilliseconds;
             if (mainMs > 3000) throw new TimeoutException("主窗构造耗时 " + mainMs + " ms，超过 3 秒阈值");
-            SmokeConsole.WriteLine($"  [2/4] 主窗构造 OK ({mainMs} ms) · 导航 15 项 · 默认 {main.Width}×{main.Height}");
+            SmokeConsole.WriteLine($"  [2/3] 主窗构造 OK ({mainMs} ms) · 导航 15 项 · 默认 {main.Width}×{main.Height}");
             if (shots && main.Content is FrameworkElement mc)
             {
                 var mw = int.TryParse(Environment.GetEnvironmentVariable("SHOT_W"), out var shotW) ? shotW : 1440;
@@ -51,36 +51,7 @@ public static class Smoke
             }
 
             var pages = main.SmokeExercisePages(shots ? shotDir : null);
-            SmokeConsole.WriteLine($"  [3/4] 页面静态构建 OK · 14 页 + 触摸屏（Measure/Arrange/UpdateLayout）");
-
-            var kiosk = new KioskWindow(services);
-            var cards = kiosk.CardCount;
-            var units = kiosk.UnitCount;
-            if (shots)
-            {
-                try
-                {
-                    kiosk.WindowStartupLocation = WindowStartupLocation.Manual;
-                    kiosk.WindowState = WindowState.Normal;
-                    kiosk.ShowActivated = false;
-                    kiosk.ShowInTaskbar = false;
-                    kiosk.Left = -4000;
-                    kiosk.Top = -4000;
-                    kiosk.Width = 1920;
-                    kiosk.Height = 1080;
-                    kiosk.Show();
-                    kiosk.UpdateLayout();
-                    if (kiosk.Content is FrameworkElement kc)
-                        CaptureElement(kc, 1920, 1080, Path.Combine(shotDir, "kiosk.png"));
-                }
-                catch (Exception ex)
-                {
-                    SmokeConsole.WriteLine("  [warn] 触摸屏截图失败：" + ex.Message);
-                }
-            }
-            kiosk.Close();
-            if (units != 11) throw new InvalidOperationException("触摸屏单元数应为 11，实际 " + units);
-            SmokeConsole.WriteLine($"  [4/4] 触摸屏构造 OK · 状态卡 {cards} · 单元 {units}");
+            SmokeConsole.WriteLine($"  [3/3] 页面静态构建 OK（Measure/Arrange/UpdateLayout）");
 
             var webView = typeof(App).Assembly.GetTypes().Where(t => t.FullName != null && t.FullName.Contains("WebView", StringComparison.OrdinalIgnoreCase)).ToList();
             if (webView.Count > 0) throw new InvalidOperationException("检测到 WebView 依赖：" + string.Join(",", webView.Select(t => t.FullName)));
@@ -93,7 +64,7 @@ public static class Smoke
             SmokeConsole.WriteLine((lnkOk ? "SHORTCUT-SELFTEST OK " : "SHORTCUT-SELFTEST FAILED ") + lnkTest);
             if (!lnkOk) throw new InvalidOperationException("桌面快捷方式自修复不可用（WScript.Shell 未生成 .lnk）");
 
-            SmokeConsole.WriteLine($"DESKTOP-SMOKE OK pages={pages} kiosk={units} main={mainMs}ms total={sw.ElapsedMilliseconds}ms");
+            SmokeConsole.WriteLine($"DESKTOP-SMOKE OK pages={pages} main={mainMs}ms total={sw.ElapsedMilliseconds}ms");
             if (shots) SmokeConsole.WriteLine("DESKTOP-SHOTS " + shotDir);
             SmokeConsole.WriteLine("说明：本自检只验证窗口与页面能构造、能量算布局；未做真实鼠标点击。");
             return 0;

@@ -24,7 +24,6 @@ const argOf = (name) => {
   return hit ? hit.slice(name.length + 3) : null;
 };
 const shotPath = argOf('screenshot');
-const isKiosk = process.argv.includes('--kiosk');
 const isSmoke = process.argv.includes('--smoke');
 
 // 兼容性优先：默认关闭硬件加速。
@@ -247,8 +246,8 @@ async function createWindow() {
 
   const iconPath = path.join(__dirname, 'build', 'icon.png');
   mainWindow = new BrowserWindow({
-    width: isKiosk ? 1920 : 1440,
-    height: isKiosk ? 1080 : 900,
+    width: 1440,
+    height: 900,
     minWidth: 1080,
     minHeight: 700,
     show: false,
@@ -292,9 +291,7 @@ async function createWindow() {
     }
   });
 
-  const route = isKiosk ? 'kiosk' : 'dashboard';
-  await mainWindow.loadURL(`http://127.0.0.1:${port}/#/${route}`);
-  if (isKiosk) mainWindow.setFullScreen(true);
+  await mainWindow.loadURL(`http://127.0.0.1:${port}/#/dashboard`);
 
   if (shotPath) {
     mainWindow.show();

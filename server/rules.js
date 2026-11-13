@@ -92,7 +92,8 @@ class RulesEngine {
 
   latest(siteId, code) {
     const p = this.pointIndex().get(`${siteId}|${code}`);
-    return p ? this.telemetry.getLatest(p.id) : null;
+    const latest = p ? this.telemetry.getLatest(p.id) : null;
+    return latest && latest.q === 'good' ? latest : null;
   }
 
   evaluate(now = Date.now()) {
@@ -113,6 +114,7 @@ class RulesEngine {
     const point = this.pointIndex().get(`${site.id}|${rule.pointCode}`);
     if (!point) return;
     const latest = this.telemetry.getLatest(point.id);
+    if (!latest || latest.q !== 'good') return;
     const v = latest ? latest.v : null;
     const key = `${site.id}|${rule.id}`;
     const rt = this.runtime.get(key) || { since: 0, out: false };

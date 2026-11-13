@@ -30,6 +30,10 @@ desktop/build/apk_icon_check.png
 _trayprev/
 _tray-preview*.png
 
+# 一次性构建工作区（PPT 草稿与渲染中间件）
+.build-tech3/
+~$*.pptx
+
 # 系统
 .DS_Store
 Thumbs.db
@@ -45,10 +49,10 @@ android/test/json.jar
 native/**/bin/
 native/**/obj/
 native/publish/
+native/publish-kiosk/
 native/installer/*.exe
 native/_probe/
 native/.vs/
 *.user
 
-native/publish-kiosk/
 run.log

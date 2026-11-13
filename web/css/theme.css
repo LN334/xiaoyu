@@ -171,11 +171,10 @@ table.data .cell-sub{font-size:10.5px;color:#7b8a93;margin-top:0}
 .login-foot{font-size:10.5px;margin-top:14px}
 .login-form .btn.block{height:36px;font-size:13px}
 
-/* ---------- 工艺图 / 触摸屏 / 页面卡片统一收角 ---------- */
+/* ---------- 工艺图 / 页面卡片统一收角 ---------- */
 .unit-card,.notice,.ad-card,.wo-card,.insp-card,.dev-card,.dcard,.k-card,.ac-card,.qc-card{
   border-radius:2px;box-shadow:none;
 }
-.p-kiosk .k-card{box-shadow:none}
 
 /* 页面级卡片/标签统一收角（覆盖各 pages-*.css 的 8-18px 圆角） */
 [class*="-card"],[class^="card"],.impact-box,.wo-row,.ac-readings,.param-group,.chip,.tag,.site-tag,.unit-drawer .table-wrap{border-radius:2px !important}

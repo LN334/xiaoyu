@@ -47,7 +47,7 @@ function listFiles() {
     const out = execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard'], {
       cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'],
     })
-    return out.split('\n').map((s) => s.trim()).filter(Boolean)
+    return out.split('\n').map((s) => s.trim()).filter(Boolean).filter(exists)
   } catch {
     const out = []
     const walk = (dir) => {
@@ -69,10 +69,8 @@ const files = listFiles()
 const VERSION_SITES = [
   ['package.json', /"version"\s*:\s*"([^"]+)"/],
   ['native/ZhifuWater.Desktop/ZhifuWater.Desktop.csproj', /<Version>([^<]+)<\/Version>/],
-  ['native/ZhifuWater.Kiosk/ZhifuWater.Kiosk.csproj', /<Version>([^<]+)<\/Version>/],
   ['android/AndroidManifest.xml', /android:versionName="([^"]+)"/],
   ['native/installer/setup.nsi', /!define APP_VERSION "([^"]+)"/],
-  ['native/installer/kiosk.nsi', /!define APP_VERSION "([^"]+)"/],
   ['native/ZhifuWater.Desktop/Windows/LoginWindow.xaml', /Text="v([\d.]+)"/],
   ['native/ZhifuWater.Desktop/Windows/MainWindow.xaml', /Text="v([\d.]+)"/],
 ]
@@ -149,8 +147,7 @@ const BRAND_RE = /清渠|Qingqu|QINGQU|智赋乡水|安吉|鲁家|碧山|黟县/
  *   b) 指向真实文档名的引用——《智赋乡水 · 智慧水处理平台建设方案 V2.2》。
  * 其余一律视为漏改。 */
 const BRAND_ALLOW = [
-  { file: /native\/installer\/(setup|kiosk)\.nsi$/, line: /./ },
-  { file: /ZhifuWater\.Kiosk\/App\.xaml\.cs$/, line: /QINGQU_KIOSK/ },
+  { file: /native\/installer\/setup\.nsi$/, line: /./ },
   { file: /Services\/UpdateService\.cs$/, line: /QINGQU_UPDATE_FEED/ },
   { file: /Services\/TrayIcon\.cs$/, line: /LegacyRunName|老版本/ },
   { file: /Services\/CredentialStore\.cs$/, line: /Qingqu|迁移|迁过来|改名前/ },

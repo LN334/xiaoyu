@@ -38,8 +38,16 @@ function siteBrief(ctx, site) {
   const health = devices.filter(d => d.status !== '未安装').map(d => A.deviceHealth(d));
   const avgHealth = health.length ? Math.round(health.reduce((s, h) => s + h.score, 0) / health.length) : 0;
   const top = active.slice().sort((a, b) => levelRank(b.level) - levelRank(a.level))[0] || null;
+  const lastDataAt = points.reduce((max, p) => {
+    const latest = ctx.telemetry.getLatest(p.id);
+    return latest ? Math.max(max, latest.t) : max;
+  }, 0);
+  const ageSec = lastDataAt ? Math.max(0, Math.floor((Date.now() - lastDataAt) / 1000)) : null;
   return {
     ...site,
+    connectionStatus: ageSec == null ? 'unknown' : ageSec <= 90 ? 'online' : 'stale',
+    lastDataAt: lastDataAt ? iso(lastDataAt) : null,
+    lastDataAgeSec: ageSec,
     counts: {
       devices: devices.length,
       installed: devices.filter(d => d.status !== '未安装').length,
@@ -66,6 +74,7 @@ function register(router, app) {
       version: app.version,
       docVersion: ctx.db.settings.docVersion,
       demoMode: ctx.db.settings.demoMode,
+      simulationEnabled: app.simulationEnabled,
       levels: Object.keys(LEVEL_NAME).map(k => ({ key: k, name: LEVEL_NAME[k], rank: levelRank(k) })),
       alarmStatus: [
         { key: 'active', name: '未确认' }, { key: 'acknowledged', name: '已确认' },

@@ -17,7 +17,6 @@ const ROUTES = [
   { id: 'inspections', title: '巡检管理', section: '运维', icon: 'inspection', file: 'inspections.js' },
   { id: 'devices', title: '设备台账', section: '运维', icon: 'device', file: 'devices.js' },
   { id: 'admin', title: '系统管理', section: '系统', icon: 'admin', file: 'admin.js' },
-  { id: 'kiosk', title: '现场触摸屏', section: '现场', icon: 'kiosk', file: 'kiosk.js', hidden: true },
 ];
 
 const PAGE_THEME = {};

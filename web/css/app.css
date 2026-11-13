@@ -121,11 +121,6 @@ svg{display:block}
 /* ---------- 框架 ---------- */
 .shell{display:grid;grid-template-columns:var(--sidebar-w) minmax(0,1fr);height:100vh;height:100dvh}
 
-/* 现场触摸屏：隐藏外壳导航，占满整屏（1920×1080 / 1366×768 大屏值守） */
-body:has(.p-kiosk) .shell{grid-template-columns:minmax(0,1fr)}
-body:has(.p-kiosk) #sidebar,body:has(.p-kiosk) #topbar,body:has(.p-kiosk) #nav-scrim,body:has(.p-kiosk) #menu-btn{display:none!important}
-body:has(.p-kiosk) #view,body:has(.p-kiosk) .view{padding:0;height:100%}
-body:has(.p-kiosk) .page{max-width:none;padding:0}
 .sidebar{
   position:relative;z-index:20;display:flex;flex-direction:column;min-height:0;
   background:#0b2b33;color:#cfe4e2;

@@ -1155,28 +1155,4 @@ public sealed partial class DemoDesktopData
     public OpResult ToggleAutomationRule(string id, bool enabled) => OpResult.Done("演示数据不支持自动化");
 
     public OpResult RunAutomationRule(string id) => OpResult.Fail("演示数据不支持自动化");
-
-    public KioskData Kiosk()
-    {
-        var rt = Rt;
-        var kpis = DashboardKpis();
-        var online = rt.Points.Values.Count(p => p.Installed && p.Quality == "good");
-        var total = rt.Points.Values.Count(p => p.Installed);
-        var data = new KioskData
-        {
-            StatusCards = new List<KpiInfo>
-            {
-                new() { Key = "mode", Label = "装置运行", Value = "自动运行", Unit = "", Tone = "good", Source = "PLC-1", Hint = "运行模式" },
-                new() { Key = "flow", Label = "进水流量", Value = (rt.Points.TryGetValue("FLOW.IN", out var f) && f.Value != null ? f.Value.Value.ToString("F1") : "待接入"), Unit = "L/h", Tone = "normal", Source = "FT-101", Hint = "瞬时流量" },
-                new() { Key = "quality", Label = "出水水质", Value = "达标", Unit = "", Tone = "good", Source = "人工化验", Hint = "COD 18.6 / 氨氮 0.42" },
-                new() { Key = "alarms", Label = "活动告警", Value = rt.Alarms.Count(IsOpen).ToString(), Unit = "条", Tone = rt.Alarms.Count(IsOpen) > 0 ? "bad" : "good", Source = "规则引擎", Hint = "含已确认未恢复" },
-                new() { Key = "orders", Label = "待处理工单", Value = rt.WorkOrders.Count(w => w.Status is "pending" or "accepted" or "processing").ToString(), Unit = "单", Tone = "warn", Source = "工单系统", Hint = "待接单 / 处理中" },
-                new() { Key = "points", Label = "点位在线率", Value = Pct(online, total), Unit = "", Tone = "good", Source = "网关 GW-1", Hint = "已安装点位" },
-            },
-            Units = UnitSnapshots().ToList(),
-            RecentAlarms = Alarms("active").Take(5).ToList(),
-            QuickActions = Actions.Where(a => a.Key is "baf.backwash" or "sulfur.backwash" or "alarm.reset" or "raw.pump.start").ToList(),
-        };
-        return data;
-    }
 }

@@ -333,7 +333,6 @@ internal static class DemoCatalog
         new("retention.alarm", "180 天"),
         new("retention.telemetry", "365 天"),
         new("backup.auto", "每日 02:00，保留 30 份"),
-        new("kiosk.auto", "空闲 3 min 返回首页"),
         new("quality.standard", "一级 A（COD ≤ 50 / NH3-N ≤ 5）"),
     };
 

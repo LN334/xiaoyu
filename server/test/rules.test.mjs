@@ -35,7 +35,7 @@ function makeEngine (ruleList, values, opts) {
   }
   const telemetry = {
     getLatest (id) {
-      return Object.prototype.hasOwnProperty.call(values, id) ? { v: values[id] } : null
+      return Object.prototype.hasOwnProperty.call(values, id) ? { v: values[id], t: T0, q: 'good' } : null
     },
   }
   const notifier = { send () {}, sendRoles () {} }

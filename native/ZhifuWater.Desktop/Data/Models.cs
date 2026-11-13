@@ -491,15 +491,6 @@ public sealed class UnitEfficiency
     public int Health { get; set; }
     public string Note { get; set; } = "";
 }
-
-public sealed class KioskData
-{
-    public List<KpiInfo> StatusCards { get; set; } = new();
-    public List<UnitSnapshot> Units { get; set; } = new();
-    public List<AlarmInfo> RecentAlarms { get; set; } = new();
-    public List<ActionInfo> QuickActions { get; set; } = new();
-}
-
 public sealed class DataHealthInfo
 {
     public string Gateway { get; set; } = "connected";

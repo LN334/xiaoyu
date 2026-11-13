@@ -1,16 +1,20 @@
 'use strict';
 /**
- * 遥测存储：最新值 + 历史序列（内存）。
- * 最新值 3 秒级刷新；历史按 5 分钟桶落点，30 天保留（支撑分析页 30 天窗口）。
+ * 遥测存储：最新值 + 历史序列（内存）；现场网关历史可按 5 分钟桶追加到 JSONL 日志。
+ * 最新值实时刷新；历史 30 天保留（支撑分析页 30 天窗口）。
  */
 const HISTORY_DAYS = 30;
 const LIVE_BUCKET_MS = 5 * 60 * 1000;
+const fs = require('fs');
+const path = require('path');
 
 class Telemetry {
-  constructor() {
+  constructor({ journalPath = null } = {}) {
     this.latest = {};      // pointId -> { v, t, q, source }
     this.hist = {};        // pointId -> [{ t, v, q }, ...]
     this.recvAt = {};      // pointId -> 服务端接收时间
+    this.journalPath = journalPath;
+    this.histBuckets = {};
   }
 
   setLatest(pointId, value, { t = Date.now(), quality = 'good', source = 'gateway' } = {}) {
@@ -37,6 +41,80 @@ class Telemetry {
     arr.push({ t, v: typeof v === 'number' ? Math.round(v * 1000) / 1000 : v, q });
   }
 
+  /** 接收外部网关数据：最新值按采集时间单调更新，历史按 5 分钟桶排序并追加到本地日志。 */
+  ingest(pointId, value, { t = Date.now(), quality = 'good', source = 'gateway' } = {}) {
+    const cur = this.latest[pointId];
+    const latestChanged = !cur || t >= cur.t;
+    if (latestChanged) this.setLatest(pointId, value, { t, quality, source });
+
+    const bucket = Math.floor(t / LIVE_BUCKET_MS) * LIVE_BUCKET_MS;
+    const arr = this.hist[pointId] || (this.hist[pointId] = []);
+    const buckets = this.histBuckets[pointId] || (this.histBuckets[pointId] = new Set(arr.map(p => Math.floor(p.t / LIVE_BUCKET_MS) * LIVE_BUCKET_MS)));
+    const existing = buckets.has(bucket);
+    let historyAdded = false;
+    if (!existing) {
+      const point = { t, v: typeof value === 'number' ? Math.round(value * 1000) / 1000 : value, q: quality };
+      let lo = 0, hi = arr.length;
+      while (lo < hi) {
+        const mid = (lo + hi) >> 1;
+        if (arr[mid].t < t) lo = mid + 1;
+        else hi = mid;
+      }
+      this.persist({ pointId, ...point });
+      arr.splice(lo, 0, point);
+      buckets.add(bucket);
+      historyAdded = true;
+      this.trim(pointId);
+    }
+    return { latestChanged, historyAdded };
+  }
+
+  /** 重启时恢复近 30 天网关历史；日志损坏行被跳过，旧记录会被压缩清除。 */
+  restore() {
+    if (!this.journalPath || !fs.existsSync(this.journalPath)) return 0;
+    const minT = Date.now() - HISTORY_DAYS * 86400000;
+    let restored = 0;
+    const keep = [];
+    for (const line of fs.readFileSync(this.journalPath, 'utf8').split(/\r?\n/)) {
+      if (!line) continue;
+      try {
+        const p = JSON.parse(line);
+        if (!p.pointId || !Number.isFinite(p.t) || p.t < minT) continue;
+        const arr = this.hist[p.pointId] || (this.hist[p.pointId] = []);
+        const bucket = Math.floor(p.t / LIVE_BUCKET_MS) * LIVE_BUCKET_MS;
+        const buckets = this.histBuckets[p.pointId] || (this.histBuckets[p.pointId] = new Set(arr.map(x => Math.floor(x.t / LIVE_BUCKET_MS) * LIVE_BUCKET_MS)));
+        if (!buckets.has(bucket)) {
+          let lo = 0, hi = arr.length;
+          while (lo < hi) {
+            const mid = (lo + hi) >> 1;
+            if (arr[mid].t < p.t) lo = mid + 1;
+            else hi = mid;
+          }
+          arr.splice(lo, 0, { t: p.t, v: p.v, q: p.q || 'good' });
+          buckets.add(bucket);
+        }
+        const cur = this.latest[p.pointId];
+        if (!cur || p.t >= cur.t) this.setLatest(p.pointId, p.v, { t: p.t, quality: p.q || 'good', source: 'gateway' });
+        keep.push(JSON.stringify(p));
+        restored++;
+      } catch { /* 跳过损坏日志行 */ }
+    }
+    const original = fs.readFileSync(this.journalPath, 'utf8');
+    const compacted = keep.length ? `${keep.join('\n')}\n` : '';
+    if (compacted !== original) {
+      fs.mkdirSync(path.dirname(this.journalPath), { recursive: true });
+      fs.writeFileSync(`${this.journalPath}.tmp`, compacted, 'utf8');
+      fs.renameSync(`${this.journalPath}.tmp`, this.journalPath);
+    }
+    return restored;
+  }
+
+  persist(point) {
+    if (!this.journalPath) return;
+    fs.mkdirSync(path.dirname(this.journalPath), { recursive: true });
+    fs.appendFileSync(this.journalPath, `${JSON.stringify(point)}\n`, 'utf8');
+  }
+
   /** 5 分钟节流落历史 */
   record(pointId, value, quality = 'good', t = Date.now()) {
     const arr = this.hist[pointId] || (this.hist[pointId] = []);
@@ -53,7 +131,11 @@ class Telemetry {
     const minT = Date.now() - HISTORY_DAYS * 86400000;
     let i = 0;
     while (i < arr.length && arr[i].t < minT) i++;
-    if (i > 0) arr.splice(0, i);
+    if (i > 0) {
+      const removed = arr.splice(0, i);
+      const buckets = this.histBuckets[pointId];
+      if (buckets) for (const p of removed) buckets.delete(Math.floor(p.t / LIVE_BUCKET_MS) * LIVE_BUCKET_MS);
+    }
   }
 
   /** 历史区间查询，按 bucketSec 聚合；measure 取均值，state/counter 取末值 */

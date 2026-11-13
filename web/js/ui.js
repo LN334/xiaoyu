@@ -208,6 +208,7 @@ export function sourceText(reading) {
   const src = reading.source || reading.provenance;
   if (src === 'drawing') return '图纸点位 · 模拟网关';
   if (src === 'optional') return '选配点位 · 模拟网关';
+  if (src === 'gateway') return '现场网关';
   if (src === 'lab') return '人工化验';
   if (src === 'manual') return '人工录入';
   if (src === 'external') return '外部接口';

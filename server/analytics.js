@@ -20,7 +20,7 @@ function reading(telemetry, point) {
     pointId: point.id, code: point.code, name: point.name, unit: point.unit,
     unitCode: point.unitCode, deviceId: point.deviceId, type: point.type,
     value, v: value, t: ts ? new Date(ts).toISOString() : null,
-    quality, q: quality, source: point.source,
+    quality, q: quality, source: l && l.source ? l.source : point.source,
     provenance: point.provenance, writable: point.writable,
     stale: ts ? Date.now() - ts > Math.max(60000, point.intervalSec * 6000) : true,
   };

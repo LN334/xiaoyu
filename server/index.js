@@ -26,7 +26,7 @@ const { iso } = require('./util');
 
 /* ---------------- 命令行参数 ---------------- */
 function parseArgs(argv) {
-  const out = { port: 8765, host: '127.0.0.1', data: 'data', reset: false, quiet: false };
+  const out = { port: 8765, host: '127.0.0.1', data: 'data', reset: false, quiet: false, simulation: true };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--port' || a === '-p') out.port = Number(argv[++i]);
@@ -34,6 +34,7 @@ function parseArgs(argv) {
     else if (a === '--data' || a === '-d') out.data = argv[++i];
     else if (a === '--reset') out.reset = true;
     else if (a === '--quiet') out.quiet = true;
+    else if (a === '--no-sim') out.simulation = false;
     else if (a === '--help' || a === '-h') out.help = true;
     else if (/^\d+$/.test(a)) out.port = Number(a);
   }
@@ -49,6 +50,7 @@ if (args.help) {
   --host <地址>       监听地址（默认 127.0.0.1）
   --data, -d <目录>   数据目录（默认 data）
   --reset             清空本地数据并按种子重建演示库
+  --no-sim             关闭模拟网关，使用真实网关接入模式
   --quiet             减少日志输出
   --help, -h          显示帮助
 `);
@@ -75,7 +77,7 @@ const logger = {
 /* ---------------- 装配 ---------------- */
 const store = new Store(DATA_DIR);
 store.load(() => buildSeed(Date.now()), { reset: args.reset });
-const telemetry = new Telemetry();
+const telemetry = new Telemetry({ journalPath: path.join(DATA_DIR, 'telemetry.jsonl') });
 const hub = new WSHub();
 
 const app = {
@@ -85,6 +87,7 @@ const app = {
   hub,
   log: logger,
   version: RELEASE_VERSION,
+  simulationEnabled: args.simulation,
 };
 Object.defineProperty(app, 'db', { get: () => store.data, enumerable: true });
 
@@ -101,6 +104,33 @@ const diagnosis = new Diagnosis({ store, telemetry });
 const auth = new Auth(store);
 
 Object.assign(app, { notifier, sim, commands, rules, diagnosis, auth });
+
+function loadGatewayConfig() {
+  const raw = process.env.XIAOYU_GATEWAYS_JSON;
+  if (!raw) return new Map();
+  let entries;
+  try { entries = JSON.parse(raw); } catch (error) {
+    logger.warn(`[ingest] XIAOYU_GATEWAYS_JSON 无法解析：${error.message}`);
+    return new Map();
+  }
+  const list = Array.isArray(entries) ? entries : Object.entries(entries || {}).map(([id, value]) => ({ id, ...value }));
+  const out = new Map();
+  for (const item of list) {
+    if (!item || !/^[A-Za-z0-9._-]{2,80}$/.test(String(item.id || '')) || typeof item.token !== 'string' || item.token.length < 32) continue;
+    if (!store.data.sites.some(site => site.id === item.siteId)) {
+      logger.warn(`[ingest] 网关 ${item.id} 配置了不存在的站点，已忽略`);
+      continue;
+    }
+    out.set(item.id, { siteId: item.siteId, token: item.token });
+  }
+  return out;
+}
+app.gatewayConfig = loadGatewayConfig();
+app.ingestEventIds = new Map();
+if (!args.simulation) {
+  const restored = telemetry.restore();
+  logger.info(`[ingest] 真实网关模式；已恢复 ${restored} 条遥测历史，配置 ${app.gatewayConfig.size} 个网关`);
+}
 
 /** 从备份恢复：替换整个业务库，并让所有登录会话失效（备份里的会话可能已过期）。 */
 app.restoreDb = (payload) => {
@@ -119,7 +149,7 @@ sim.on((evt) => {
 
 /* ---------------- 路由 ---------------- */
 const router = new Router();
-for (const mod of ['./api/auth', './api/overview', './api/alarms', './api/control', './api/ops', './api/analysis']) {
+for (const mod of ['./api/auth', './api/overview', './api/alarms', './api/control', './api/ops', './api/analysis', './api/ingest']) {
   require(mod).register(router, app);
 }
 
@@ -174,6 +204,16 @@ async function handle(req, res) {
     return;
   }
 
+  if (!app.simulationEnabled && (
+    pathname === '/api/actions'
+    || (/^\/api\/commands(?:\/|$)/.test(pathname) && req.method !== 'GET')
+    || (/^\/api\/params\/[^/]+\/(?:change|rollback)$/.test(pathname) && req.method === 'POST')
+    || (/^\/api\/param-requests\/[^/]+\/(?:approve|reject)$/.test(pathname) && req.method === 'POST')
+  )) {
+    sendJSON(res, 403, { ok: false, error: { code: 'SIMULATION_DISABLED', message: '当前为真实数据接入模式，平台不提供云端设备控制或参数下发。' } });
+    return;
+  }
+
   let body = {};
   if (['POST', 'PUT', 'PATCH', 'DELETE'].includes(req.method)) {
     try {
@@ -211,6 +251,7 @@ const server = http.createServer((req, res) => {
 hub.attach(server, {
   pathName: '/ws',
   authenticate: (req) => auth.fromRequest(req),
+  siteScope: (user) => auth.siteScope(user),
 });
 
 /* ---------------- 启停 ---------------- */
@@ -247,7 +288,7 @@ if (!fs.existsSync(path.join(WEB_ROOT, 'index.html'))) {
   logger.warn('尚未找到 web/index.html，接口可用但页面会返回 404。');
 }
 
-sim.start();
+if (args.simulation) sim.start();
 rules.start();
 commands.recover();
 auth.cleanupSessions();
@@ -258,13 +299,15 @@ server.listen(args.port, args.host, () => {
   const accounts = users.map(u => `${u.username}（${u.name}·${(store.data.roles[u.role] || {}).name || u.role}）`).join('、');
   console.log('');
   console.log('  ╔══════════════════════════════════════════════════════════╗');
-  console.log('  ║   小禹 · 村镇水处理站智能运维平台   V2.2 演示环境        ║');
+  console.log(`  ║   小禹 · 村镇水处理站智能运维平台   V2.2 ${args.simulation ? '模拟演示模式' : '网关接入模式'}        ║`);
   console.log('  ╚══════════════════════════════════════════════════════════╝');
   console.log(`   访问地址   ${url}`);
   console.log(`   数据目录   ${DATA_DIR}`);
   console.log(`   演示口令   water123`);
   console.log(`   可用账号   ${accounts}`);
   console.log('');
-  console.log('   提示：演示数据由内置模拟网关生成；按 Ctrl+C 停止服务。');
+  console.log(args.simulation
+    ? '   提示：演示数据由内置模拟网关生成；按 Ctrl+C 停止服务。'
+    : '   提示：模拟网关已关闭，等待已配置的现场网关只读上报；按 Ctrl+C 停止服务。');
   console.log('');
 });

@@ -151,7 +151,7 @@ function encodeFrame(payload, opcode = 1) {
 class WSHub {
   constructor() { this.clients = new Set(); }
 
-  attach(server, { authenticate, pathName = '/ws' }) {
+  attach(server, { authenticate, siteScope = null, pathName = '/ws' }) {
     server.on('upgrade', (req, socket) => {
       try {
         const url = new URL(req.url, 'http://localhost');
@@ -172,7 +172,7 @@ class WSHub {
           '\r\n',
         ].join('\r\n'));
         socket.setNoDelay(true);
-        const client = { socket, user, alive: true, siteScope: null };
+        const client = { socket, user, alive: true, siteScope: siteScope ? siteScope(user) : null };
         this.clients.add(client);
         socket.on('data', (buf) => this.onClientData(client, buf));
         socket.on('close', () => this.clients.delete(client));
@@ -220,9 +220,19 @@ class WSHub {
   }
 
   broadcast(obj) {
-    const text = JSON.stringify(obj);
     for (const c of this.clients) {
-      try { c.socket.write(encodeFrame(text, 1)); } catch { this.clients.delete(c); }
+      let visible = obj;
+      if (Array.isArray(obj.updates) && obj.updates.some(item => item.siteId)) {
+        if (Array.isArray(c.siteScope)) {
+          const updates = obj.updates.filter(item => c.siteScope.includes(item.siteId));
+          if (!updates.length) continue;
+          visible = { ...obj, updates };
+        }
+      } else {
+        const siteId = obj.siteId || (obj.data && obj.data.siteId);
+        if (siteId && Array.isArray(c.siteScope) && !c.siteScope.includes(siteId)) continue;
+      }
+      try { c.socket.write(encodeFrame(JSON.stringify(visible), 1)); } catch { this.clients.delete(c); }
     }
   }
 

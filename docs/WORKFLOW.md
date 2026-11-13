@@ -13,9 +13,9 @@ npm run check -- --json  # 给 CI / 脚本读
 | # | 步骤 | 检查什么 | 失败意味着 |
 |---|------|----------|------------|
 | 1 | `npm run audit` | 版本号 8 处一致、三端种子逐字段相同、旧品牌只剩兼容代码、文档引用不断链、依赖仍为零、文件开头无双 BOM | 有一处改了没同步 |
-| 2 | `dotnet build` ×2 | 桌面端与 kiosk 能否编过 | 改了 C# 没编译过 |
+| 2 | `dotnet build` | 桌面端能否编过 | 改了 C# 没编译过 |
 | 3 | `npm test` | Web 服务端纯函数：规则引擎、命令状态机、遥测聚合、口令校验 | 业务逻辑被改坏 |
-| 4 | `Xiaoyu.exe --smoke` | 16 个页面构造、11 个 kiosk 页、四步登录 | 界面层回归 |
+| 4 | `Xiaoyu.exe --smoke` | 页面构造、登录、命令链 | 界面层回归 |
 | 5 | `Xiaoyu.exe --shots`（可选） | 逐页截图到 `%TEMP%/zhifu-desktop-shots` | 只能人眼看，脚本不替你判断好看 |
 
 任何一步失败即停——在坏状态上继续跑没有意义。
@@ -24,7 +24,7 @@ npm run check -- --json  # 给 CI / 脚本读
 
 同一条站点信息散落在**三端六处**：
 
-- `native/seed/db.json`（桌面端与 kiosk 的种子）
+- `native/seed/db.json`（桌面端种子）
 - `native/ZhifuWater.Desktop/Data/Demo*.cs`（`ZHIFU_DEMO=1` 时的演示数据）
 - `server/seed/assets.js`（Web 端）
 - `android/assets/demo/*.json`（安卓端 9 个文件）
@@ -84,7 +84,7 @@ node --test server/test/*.test.mjs   # 也可以直接指定文件
 `Xiaoyu.exe` 内置两个参数，不需要额外工具：
 
 ```bash
-native/publish/Xiaoyu.exe --smoke   # 构造全部页面 + 登录 + 命令链，打印 DESKTOP-SMOKE OK pages=16 kiosk=11
+native/publish/Xiaoyu.exe --smoke   # 构造全部页面 + 登录 + 命令链，打印 DESKTOP-SMOKE OK pages=15
 native/publish/Xiaoyu.exe --shots   # 逐页截图，输出目录 %TEMP%/zhifu-desktop-shots
 ```
 

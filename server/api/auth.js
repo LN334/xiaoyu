@@ -39,7 +39,7 @@ function register(router, app) {
       user: app.auth.sanitize(ctx.user),
       version: app.version,
       demo: { password: demoPassword, accounts: ctx.db.users.map(u => ({ username: u.username, name: u.name, role: u.role, title: u.title })) },
-      settings: { platformName: ctx.db.settings.platformName, shortName: ctx.db.settings.shortName, notice: ctx.db.settings.notice, demoMode: ctx.db.settings.demoMode, version: ctx.db.settings.version, docVersion: ctx.db.settings.docVersion, autoRefreshSec: ctx.db.settings.autoRefreshSec },
+      settings: { platformName: ctx.db.settings.platformName, shortName: ctx.db.settings.shortName, notice: ctx.db.settings.notice, demoMode: ctx.db.settings.demoMode, simulationEnabled: app.simulationEnabled, version: ctx.db.settings.version, docVersion: ctx.db.settings.docVersion, autoRefreshSec: ctx.db.settings.autoRefreshSec },
     });
   });
 

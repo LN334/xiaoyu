@@ -1,0 +1,39 @@
+/* 多站总览：仅作用于 .p-fleet */
+.p-fleet .fleet-page{display:flex;flex-direction:column;gap:16px;min-width:0}
+.p-fleet .fleet-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.p-fleet .fleet-kpis .kpi{min-height:98px;padding:12px 15px}
+.p-fleet .fleet-kpis .kpi-value{font-size:24px}
+.p-fleet .fleet-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.p-fleet .fleet-search{width:min(260px,48vw)}
+.p-fleet .fleet-status{width:140px}
+.p-fleet .fleet-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.p-fleet .fleet-site{
+  display:flex;flex-direction:column;gap:13px;width:100%;min-width:0;padding:15px;text-align:left;
+  border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow);
+  transition:border-color .14s,transform .14s,box-shadow .14s;
+}
+.p-fleet .fleet-site:hover{border-color:#9bcfc8;box-shadow:var(--shadow-lg);transform:translateY(-1px)}
+.p-fleet .fleet-site:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.p-fleet .fleet-site.status-stale{border-left:3px solid var(--warn)}
+.p-fleet .fleet-site.status-unknown{border-left:3px solid #b6c5cd}
+.p-fleet .fleet-site-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.p-fleet .fleet-site-name{display:block;font-size:14px;line-height:1.45;font-weight:650;color:var(--ink)}
+.p-fleet .fleet-site-region{font-size:11.5px;color:var(--muted);margin-top:3px}
+.p-fleet .fleet-site-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding-top:11px;border-top:1px solid var(--line-soft)}
+.p-fleet .fleet-metric{display:flex;flex-direction:column;gap:3px;min-width:0}
+.p-fleet .fleet-metric span{font-size:10.5px;color:var(--muted)}
+.p-fleet .fleet-metric b{font-size:16px;font-weight:650;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.p-fleet .fleet-metric b.text-bad{color:var(--bad)}
+.p-fleet .fleet-metric b.text-warn{color:var(--warn)}
+.p-fleet .fleet-metric b.text-good{color:var(--good)}
+.p-fleet .fleet-site-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:10.5px;color:var(--muted-2)}
+.p-fleet .fleet-source{font-size:11px;color:var(--muted-2);line-height:1.5}
+@media(max-width:900px){.p-fleet .fleet-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){
+  .p-fleet .fleet-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .p-fleet .fleet-kpis .kpi{min-height:88px;padding:10px 12px}
+  .p-fleet .fleet-kpis .kpi-value{font-size:21px}
+  .p-fleet .fleet-grid{grid-template-columns:1fr}
+  .p-fleet .fleet-toolbar{width:100%}
+  .p-fleet .fleet-search{flex:1;min-width:150px}
+}

@@ -127,10 +127,8 @@ public interface IDesktopData
     OpResult ToggleAutomationRule(string id, bool enabled);
     OpResult RunAutomationRule(string id);
 
-    // ---------- 通知 / 现场屏 ----------
     IReadOnlyList<NotificationInfo> Notifications { get; }
     int UnreadNotifications { get; }
     void MarkNotificationsRead();
     void MarkNotificationRead(string id);
-    KioskData Kiosk();
 }

@@ -10,7 +10,7 @@
     <AssemblyName>Xiaoyu</AssemblyName>
     <RootNamespace>ZhifuWater.Desktop</RootNamespace>
     <ApplicationIcon>..\..\desktop\build\icon.ico</ApplicationIcon>
-    <Version>2.0.23</Version>
+    <Version>0.0.1</Version>
     <Company>LN334</Company>
     <Product>小禹 · 村镇水处理站智能运维平台</Product>
     <AssemblyTitle>小禹</AssemblyTitle>
